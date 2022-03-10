@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>BASE HTML</title>
+	<style type="text/css">
+		body{
+			font-family: Verdana ;
+		}
+	</style>
+	<script>
+		//default value for script tag is JS
+		alert('I\'m in the head'); 
+	</script>
+
+
+</head>
+<body>
+	<!-- HTML elements go here -->
+	<div>Div 1</div>
+	<div>Div 2</div>
+	<div>Div 3</div>
+	<!-- <div id="myDiv5">Div 4</div> -->
+	<div id="my-div">Div 4</div>
+
+	<script>
+		//default value for script tag is JS
+		alert("I'm in the body"); 
+	</script>
+	<script type="text/javascript">
+	//code goes here	
+	myDiv = document.body.children[0]; //div1
+	var myDiv2 = document.getElementsByTagName('div')[1];
+	let myDiv3 = document.querySelectorAll('div')[2]
+	const myDiv4 = document.querySelector('#my-div');
+
+	//console.log(myDiv, myDiv2, myDiv3, myDiv4, myDiv5);
+	console.log(myDiv, myDiv2, myDiv3, myDiv4);
+
+	myDiv.textContent = "Div One";
+
+	</script>
+</body>
+</html>

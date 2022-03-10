@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Output Examples</title>
+	<style type="text/css">
+		body{
+			font-family: Verdana ;
+		}
+	</style>
+</head>
+<body>
+	<div id="my-message">Today is:
+		<script type="text/javascript">
+			//document.write('Today is:');
+			document.write(Date());
+		</script>
+	</div>
+	<script type="text/javascript">
+	//use strict is a good practice.
+	'use strict'; 
+	document.querySelector('#my-message').innerHTML = "Some String.";
+
+	window.onresize = function(){
+		var winWidth = window.innerWidth;
+		var winHeight = window.innerHeight;
+		console.log('width: '+winWidth);
+		console.log('height: '+winHeight);
+
+		document.querySelector('#my-message').textContent = `Height: ${winHeight}
+			Width: ${winWidth}`;
+
+		//"Width: "+winWidth+" Height: "+winHeight;
+
+
+
+	}
+
+	</script>
+</body>
+</html>

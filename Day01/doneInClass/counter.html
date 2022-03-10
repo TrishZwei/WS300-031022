@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Output Examples</title>
+	<style type="text/css">
+		body{
+			font-family: Verdana ;
+			font-size: 16px;
+		}
+	</style>
+</head>
+<body>
+	<div id="counter-div">0</div>
+	<input type="button" value="+1" id="my-btn">
+	<script type="text/javascript">
+	//use strict is a good practice.
+	'use strict'; 
+	//variables at top
+	let counter = 0; //stores how many times the button has been clicked
+	const counterDiv = document.getElementById('counter-div'); //old school method 
+
+	function increaseCounter(){
+		//console.log('click');
+
+		//all the ways you can add 1
+		//counter = counter+1; 
+		//counter+=1;
+		counter++; //only adds one to itself
+
+		counterDiv.textContent = counter;
+		
+		if(counter < 5){
+			counterDiv.style.color = 'green';
+		}else{
+			counterDiv.style.color = 'red';
+		}
+
+		if(counter == 7 || counter == 10){
+			counterDiv.style.color = 'purple';
+		}
+
+		if(isOdd(counter)){
+			counterDiv.style.backgroundColor = 'cornflowerblue';
+		}else{
+			counterDiv.style.backgroundColor = '#ccc';
+		}
+
+		if(counter > 15){
+			counterDiv.style.fontSize = counter+'px';
+		}
+
+
+	} //end increaseCounter 
+
+
+	function isOdd(num){
+		//num is a local variable just for this function
+		if(num%2 == 1){
+			//is remainder of num 1? Then this is true and run this code;
+		 	return true
+		}else{
+			return false;
+		}		
+	}
+
+
+	//event listeners:
+	const myBtn = document.querySelector('input');
+	myBtn.onclick = increaseCounter; //no ();
+
+
+
+	</script>
+</body>
+</html>
