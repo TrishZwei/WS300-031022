@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Equality Example</title>
+	<style type="text/css">
+		body{
+			font-family: Verdana ;
+		}
+	</style>
+</head>
+<body>
+	<div class="message">Message goes here.</div>
+	<div>Div1</div>
+
+	<script type="text/javascript">
+	//code goes here	
+	'use strict';
+	//equality!
+
+	const messageDiv = document.querySelector('.message');
+	//document.querySelectorAll('.message')[0]
+	//document.getElementsByTagName('div')[0];
+	//document.body.children[0];
+//short way
+	var exp1 = 1,
+		exp2 = (exp1 == '1'),
+		exp3 = (exp1 === '1');
+
+//long way
+	// var exp1 = 1;
+	// var exp2 = (exp1 == '1');
+	// var exp3 = (exp1 === '1');
+
+//	console.log(messageDiv);
+	console.log(exp1, exp2, exp3)
+	console.log(typeof exp1) //number
+	console.log(typeof '1') //string
+	console.log(exp1 == 1) //true
+	console.log(exp1 == '1') //also true
+	console.log(exp1 === '1') //false
+	console.log(exp1 === 1) //also true
+
+//interpolation example:
+const message = `Exp1 gets its value from the assignment operator and has the value of ${exp1}.
+ 				 Exp2 compares exp1's value to a character 1 and the comparison is seen as: 
+ 				 ${exp2}. Exp3 compares its value and its type and is: ${exp3}. Why?`;
+
+//concatenation example:
+//	const message = "Exp1 gets its value from the assignment operator and has the value of "+exp1+". Exp2 compares exp1's value to a character 1 and the comparison is seen as: "+exp2+"Exp3 compares its value to its type and is: "+exp3+". Why?";
+
+	messageDiv.textContent = message;
+
+
+	</script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Equality Example</title>
+	<style type="text/css">
+		body{
+			font-family: Verdana ;
+		}
+	</style>
+</head>
+<body>
+	<div class="hour">0</div>
+
+	<script type="text/javascript">
+	//code goes here	
+	'use strict';
+	let thisTime = new Date(); //gets current date and time as per what is on your local machine
+	console.log(thisTime);
+	//thisTime.setHours(18);
+	thisTime = thisTime.getHours(); //returns 0 - 23, military time.
+	//we are resetting the value of thisTime with the assignment operator, from the date object to an hour value 
+
+	console.log(thisTime)
+
+	const displayDiv = document.querySelector('.hour'); 
+
+	let message = 'Good Evening'; //creating a variable to have its value set based on specific conditions:
+
+	if(thisTime < 17){
+		message = 'Good Afternoon';
+	}
+
+	if(thisTime < 12){
+		message = 'Good Morning';
+	}
+
+
+	displayDiv.textContent = message;
+
+
+
+	</script>
+</body>
+</html>

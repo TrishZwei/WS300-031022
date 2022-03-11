@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Switch Example</title>
+	<style type="text/css">
+		body{
+			font-family: Verdana ;
+		}
+	</style>
+</head>
+<body>
+	<div class="hour">0</div>
+
+	<script type="text/javascript">
+	//code goes here	
+	'use strict';
+	let thisTime = new Date(); //gets current date and time as per what is on your local machine
+	console.log(thisTime);
+	thisTime.setHours(23);
+	console.log(thisTime);
+	thisTime = thisTime.getHours(); //returns 0 - 23, military time.
+	//we are resetting the value of thisTime with the assignment operator, from the date object to an hour value 
+
+	console.log(thisTime)
+
+	const displayDiv = document.querySelector('.hour'); 
+
+	let message; //creating a variable to have its value set based on specific conditions:
+
+	switch(thisTime){
+//if any one of these cases matches the value of thisTime you get a value for message:
+	case 0:
+	case 1:
+	case 2:
+	case 3:
+	case 4:
+	case 5:
+	case 6:
+	case 7:
+	case 8:
+	case 9:
+	case 10:
+	case 11:
+		message = "Good Morning";
+		break;
+
+	//if none of the cases before hte break matches the value of thisTime, it checks the values below:
+	case 12:
+	case 13:
+	case 14:
+	case 15:
+	case 16:
+		message = "Good Afternoon";
+	break;
+	
+	//if none of the above are true:
+	default:
+		message = "Good Evening"	
+	}
+
+
+	displayDiv.textContent = message;
+
+
+
+	</script>
+</body>
+</html>

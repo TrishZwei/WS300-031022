@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Loop Examples</title>
+	<style type="text/css">
+		body{
+			font-family: Verdana ;
+		}
+	</style>
+</head>
+<body>
+	<div class="message">0</div>
+
+	<script type="text/javascript">
+	//code goes here	
+	'use strict';
+
+	const messageDiv = document.querySelector('.message');
+	const items = ['one', 'two', 'three','four', 'five', 'six'];
+	const theLength = items.length; //a little easier on the processor, rather than checking each time the loop is run. This is good when the length of the array does not change.
+
+	let message = '';
+
+
+	//for loop version 1:
+	// for(let i = 0; i < theLength; i++){
+	// 	message += `<div>value: ${items[i]}, index: ${i}</div>`;
+	// }
+
+	//for loop version 2:
+	// for(let i = theLength-1; i >=0; i--){
+	// 	message += `<div>value: ${items[i]}, index: ${i}</div>`;
+	// }
+
+//while loop:
+	let i = 0//must be established outside the loop
+	message = 'While Loop: <br>';
+	// while(i < theLength){
+	// 	//i=0
+	// 	message += `<div>value: ${items[i]}, index: ${i}</div>`;
+	// 	i++;
+	// }
+
+//while loop v2
+	// 	message = 'While loop V2: <br>'
+	// while(items[i]){
+	// 	message += `<div>value: ${items[i]}, index: ${i}</div>`;
+	// 	i++;
+	// }
+
+//do while loop
+	i = 6;
+	message = 'Do While Loop';
+	do{
+		message += `<div>value: ${items[i]}, index: ${i}</div>`;
+	}while(i < theLength);
+
+
+
+
+
+//message goes here:
+	messageDiv.innerHTML = message;
+	
+	</script>
+</body>
+</html>

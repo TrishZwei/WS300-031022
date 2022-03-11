@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Switch Example</title>
+	<style type="text/css">
+		body{
+			font-family: Verdana ;
+		}
+	</style>
+</head>
+<body>
+	<div class="hour">0</div>
+
+	<script type="text/javascript">
+	//code goes here	
+	'use strict';
+	let thisTime = new Date(); //gets current date and time as per what is on your local machine
+
+	const displayDiv = document.querySelector('.hour');
+	let year = thisTime.getFullYear(); //returns 2022
+	const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+	let month = thisTime.getMonth()+1; //JS returns 0-11
+	let dayCount;
+
+	//let message; //creating a variable to have its value set based on specific conditions:
+
+	switch(month){
+		case 1:
+		case 3:
+		case 5:
+		case 7:
+		case 8:
+		case 10:
+		case 12:
+			dayCount = 31;
+			break;
+
+		case 4:
+		case 6:
+		case 9:
+		case 11:
+			dayCount = 30;
+			break;
+
+		case 2:
+			if(((year % 4 == 0) && !(year % 100 == 0)) || (year % 400 == 0)){
+				//yes this is a leap year
+			 dayCount = 29
+
+			}else{
+				dayCount = 28;
+			}
+			break;	
+
+		default:
+			dayCount = -1; //invalid month
+	}
+
+
+	displayDiv.textContent = `The number of days in ${monthNames[month-1]} are: ${dayCount}.`;
+
+
+
+	</script>
+</body>
+</html>

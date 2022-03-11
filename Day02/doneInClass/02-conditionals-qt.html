@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Equality Example</title>
+	<style type="text/css">
+		body{
+			font-family: Verdana ;
+		}
+	</style>
+</head>
+<body>
+	<div class="hour">0</div>
+
+	<script type="text/javascript">
+	//code goes here	
+	'use strict';
+	let thisTime = new Date().getHours(); //gets current date and time as per what is on your local machine
+	console.log(thisTime);
+	//thisTime.setHours(18);
+//	thisTime = thisTime.getHours(); //returns 0 - 23, military time.
+	//we are resetting the value of thisTime with the assignment operator, from the date object to an hour value 
+
+	console.log(thisTime)
+
+	const displayDiv = document.querySelector('.hour'); 
+
+	let message; //creating a variable to have its value set based on specific conditions:
+
+	if(thisTime < 12){
+		//before noon
+	 	message = 'Good Morning';
+	}else if(thisTime < 17){
+		//checking to see if it is before 5 PM. This second check needs parenthesis to check against thisTime's value
+		message = 'Good Afternoon';
+	}else{
+		//if the first two are NOT true, then the else condition is read
+		message = 'Good Evening';
+
+	}
+
+	displayDiv.textContent = message;
+
+
+
+	</script>
+</body>
+</html>
