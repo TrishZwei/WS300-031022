@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Loops 2</title>
+	<style type="text/css">
+		body{
+			font-family: Verdana ;
+		}
+	</style>
+</head>
+<body>
+	<div class="message"></div>
+	<div class="container">
+		<div>One</div>
+		<div>Two</div>
+		<div>Three</div>
+		<div>Four</div>
+		<div>Five</div>
+	</div>
+	<script type="text/javascript">
+	'use strict';
+	const messageDiv = document.querySelector('.message');
+	let myDivs = document.querySelectorAll('.container div'); //nodelist
+
+	let message = '';
+	console.log(typeof myDivs); //object
+	console.log(myDivs.constructor); //returns nodelist
+	let divArray = [...myDivs]; //converts nodelist to array
+	
+	// //forEach array method:
+	// message = 'For Each Array Method:';
+	// divArray.forEach( function(item, index){
+	// 	message+= `<div>value: ${item.textContent}, index: ${index}</div>`;
+	// })		
+
+//for...in
+	message = 'For ... in:';
+	for(let item in divArray){
+		message += `<div>value: ${divArray[item].textContent}, index: ${item}</div>`
+	}
+
+
+	messageDiv.innerHTML = message;
+
+	</script>
+</body>
+</html>

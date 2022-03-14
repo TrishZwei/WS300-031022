@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Loops 2</title>
+	<style type="text/css">
+		body{
+			font-family: Verdana ;
+		}
+	</style>
+</head>
+<body>
+	<h1>Calculator</h1>
+	<input type="text" id="value-1" placeholder="0"><br>
+	<select id="please-choose">
+		<option value="">Please Choose</option>
+		<option value="add">Plus</option>
+		<option value="sub">Minus</option>
+		<option value="mul">Times</option>
+		<option value="div">Divided By</option>
+	</select><br>
+	<input type="number" id="value-2" placeholder="0"><br>
+	<input type="button" id="do-math" value="Do Math">
+	<div class="total">Total <span>0</span></div>
+
+	<script type="text/javascript">
+	'use strict';
+
+	//take value 1 & 2 and add together:
+
+
+	//declared function:
+	function doMath(){
+		//no arguments needed to make work:
+		let val1 = Number(document.querySelector('#value-1').value)
+		let val2 = document.querySelector('#value-2').value * 1;
+		let op = document.getElementById('please-choose').value;
+
+
+		let total = 0;
+
+		if(isNaN(val1) || isNaN(val2)){
+			alert('You need to input a number');
+			return false;
+		}else{
+			//if both values are a proper number...
+			//alert(val1 + val2);
+			if(op == ''){
+				alert('You need to select an operator');
+				return false;	
+			}else if(op == 'add'){
+				total = val1+val2;
+			}else if(op == 'sub'){
+				total = val1-val2;
+			}else if(op == 'mul'){
+				total = val1 * val2;
+			}else{
+				total = val1/val2;
+			}
+
+			//alert(total);
+			document.querySelector('.total span').textContent = total;
+
+		}
+	
+
+	}
+
+
+
+	//event listener:
+	const totalBtn = document.getElementById('do-math');
+	totalBtn.onclick = doMath	
+
+
+	</script>
+</body>
+</html>

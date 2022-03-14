@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html  class="no-js">
+<head>
+	<meta charset="utf-8">
+	<title>Click Game</title>
+	<style type="text/css">
+		body{
+			font-family: Verdana ;
+		}
+
+		#game-stage{
+			width: 400px;
+			height: 400px;
+			border: 1px solid black;
+			position: relative;
+		}
+
+		#click-box{
+			width: 40px;
+			height: 40px;
+			border: 1px solid black;
+			position: absolute;
+			top: 10px;
+			left: 10px;
+			background-color: rebeccapurple;
+		}
+
+	</style>
+</head>
+<body>
+	<div id="u-i">
+		Score: <span class="score">0</span> | Time Remaining: <span class="time">10</span> seconds.
+	</div>
+	<div id="game-stage">
+		<div id="click-box"></div>	
+	</div>
+
+	<script type="text/javascript">
+	'use strict';
+	//demo "no-js" without modernizr
+	document.querySelector('html').classList = 'js';
+
+	/*
+	we need:
+	1. timer that updates for the user
+	2. score counter
+	3. click event that runs a function (box)
+		-add one to score
+		-move the box
+		-change bg color
+		-change height & width of the box
+	4. when timer reaches 0 end the game
+	*/
+
+//html elements
+	const box = document.getElementById('click-box');
+	const scoreDisp = document.querySelector('.score');
+	const timeDisp = document.querySelector('.time');
+
+
+//other variables
+	var score = 0;
+	let seconds = 10;
+	let timer; 
+	let gameRunning = false; //stores the current state of the game
+
+
+	function setTime(){
+		//subtract 1 from seconds,
+		seconds--;
+		//update time display
+		timeDisp.textContent = seconds;
+
+		if(seconds == 0){
+			clearInterval(timer);
+			gameRunning = false;
+			box.removeEventListener('click', moveBox);
+			//alert('game over');
+			document.querySelector('#game-stage').innerHTML = '<h1>Game Over</h1><div class="start">Play Again?</div>';
+			document.querySelector('.start').onclick = function(){
+				location.reload();
+			}
+		}
+
+	} 
+
+	function moveBox(){
+		// !gameRunning 
+		if(gameRunning == false){
+			timer = setInterval(setTime, 1000);
+			gameRunning = true;
+		}
+		//add one to score
+		score++;
+		//show user updated score
+		scoreDisp.textContent = score;
+		//reposition, resize, recolor the box;
+		let newHeight = getRandInt(10,60);
+		let newWidth = getRandInt(10,60);
+		let newTop = getRandInt(0,400-(newHeight+1));
+		let newLeft = getRandInt(0,400-(newWidth+1))
+		
+
+
+		box.style.top = newTop+'px';
+		box.style.left = newLeft+'px';
+		box.style.height = newHeight+'px';
+		box.style.width = newWidth+'px';
+//bg color:
+		box.style.backgroundColor = genHex();
+
+	}//end moveBox()
+
+	//function to generate a whole random interger
+	//@2param: numbers
+	function getRandInt(min = 1, max = 100){
+		return Math.floor(Math.random() *(max-min +1))+min;
+	}
+
+	//generate random hex value:
+	function genHex(){
+		let hexValues = '0123456789ABCDEF';
+		hexValues = hexValues.split('');//converts string to array and stores it in the same variable
+		let hexColor = '#';
+
+		for(let i = 0; i < 6; i++){
+			let newVal = hexValues[getRandInt(0,15)];
+			hexColor+=newVal;
+			console.log(hexColor);
+		}
+
+		return hexColor;
+
+	}
+
+
+
+
+
+	//click event on box
+	box.addEventListener('click', moveBox);
+
+
+
+	</script>
+</body>
+</html>
