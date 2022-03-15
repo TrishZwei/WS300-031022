@@ -10,13 +10,13 @@
     <button id="myBtn">Display Random Number</button>
 	
     <script>
-    function getRandomInt( min, max ){
+    function getRandomInt( min = 1, max = 100 ){
     return Math.floor(Math.random()*(max-min+1) )+min;
     }    
-
+//if there are parameters in a function unless there are default values assigned, there need to be values passed to them.
 
     document.getElementById('myBtn').onclick = function(){
-        document.getElementById('output').innerHTML = getRandomInt();
+        document.getElementById('output').innerHTML = getRandomInt(40,400);
         }
     </script>
 </body>

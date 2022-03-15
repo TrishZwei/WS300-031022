@@ -22,10 +22,11 @@
 		const myBtn = document.body.children[2];
 
 		function changeColor(){
+			console.log('click');
 			document.getElementById('box').style.backgroundColor = 'red'
 		}
 
-		myBtn.onclick = changeColor(); 
+		myBtn.onclick = changeColor; //remove parenthesis so it waits for the click
 
 	</script>
 </body>

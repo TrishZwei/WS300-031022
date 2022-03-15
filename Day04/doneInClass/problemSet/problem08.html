@@ -18,14 +18,16 @@
 
 
     document.getElementById('myBtn').onclick = function(){
-            output.innerHTML = getRandomInt(1,100);
-        if(getRandomInt(1,100) < 50){
+        let num = getRandomInt(1,100);
+
+        output.innerHTML = num;
+        if(num < 50){
             output.style.color = 'red';
         }else{
             output.style.color = 'white';
         }
 
-        if(getRandomInt(1,100) % 3 == 0){
+        if(num % 3 == 0){
             output.style.backgroundColor = 'grey';
         }else{
           output.style.backgroundColor = 'black';  
