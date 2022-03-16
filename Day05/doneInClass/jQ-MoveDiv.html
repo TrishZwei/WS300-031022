@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>jQuery Template</title>
+	<style type="text/css">
+		body{
+			font-family: Verdana;
+		}
+
+		.wrapper{
+			border:  1px solid black;
+			position: absolute;
+			top: 10px;
+			left: 10px;
+			bottom: 10px;
+			right: 10px;
+			background-color: #add;
+		}
+
+		.box{
+			height: 50px;
+			width:50px;
+			top: 100px;
+			left: 10px;
+			background-color: rebeccapurple;
+			position: absolute;
+		}
+
+
+	</style>
+</head>
+<body>
+	<div class="wrapper">
+		<button id="move-up">Move Up</button>
+		<button id="move-down">Move Down</button>
+		<button id="move-left">Move Left</button>
+		<button id="move-right">Move Right</button>
+	<div class="box"></div>
+</div>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+	<script type="text/javascript">
+		'use strict';
+		let box = $('.box');
+		let moveValue = 10;
+
+		$('#move-up').click( function(){
+			box.css({'top': '-='+moveValue});
+		})
+
+		$('#move-down').click( function(){
+			box.css({'top': '+='+moveValue});
+		})
+
+
+		$('#move-right').click( function(){
+			box.css({'left': '+='+moveValue});
+		})
+
+		$('#move-left').click( function(){
+			box.css({'left': '-='+moveValue});
+		})
+
+		//keyboard events:
+		$(document).keyup( function(e){
+			//e stands for event
+			//	console.log(e.which);
+			//up: 38, down: 40 , left:37 , right 39
+			//a: 65, s: 83, w:87, d:68
+
+			switch(e.which){
+				case 38:
+				case 87:
+				$('#move-up').trigger('click');
+				break;
+
+				case 40:
+				case 83:
+				$('#move-down').trigger('click');
+				break;				
+
+				case 37:
+				case 65:
+				$('#move-left').trigger('click');
+				break;
+
+				case 39:
+				case 68:
+				$('#move-right').trigger('click');
+				break;
+			}
+
+// if(e.which == 38 || e.which == 87){
+
+// 	console.log('moveUp');
+// 	$('#moveUp').trigger('click');
+ 
+//} else if(e.which == 40){
+
+// 	$('#moveDown').trigger('click');
+// 	console.log('moveDown');
+
+// }else if(e.which == 37){
+
+// 	$('#moveLeft').trigger('click');	
+// 	console.log('moveLeft');
+
+// }else if(e.which == 39){
+	
+// 	console.log('moveRight');
+// 	$('#moveRight').trigger('click');
+
+// }
+
+
+		})
+
+
+
+	</script>
+</body>
+</html>

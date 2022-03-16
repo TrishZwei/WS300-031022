@@ -11,12 +11,26 @@
 	</style>
 </head>
 <body>
+	<div>Div1</div>
+	<div>Div2</div>
+
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-	<script type="text/javascript">
+	<script type="text/javascript">		
+		let divs = $('div');
+		divs.click(beenClicked);
+
+		console.log(divs[0])
+
+		function beenClicked(){
+			let text = $(this).text()
+
+			alert(text);
+
+		}
+
 		
 
-
-		
 	</script>
+
 </body>
 </html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>jQuery Template</title>
+	<style type="text/css">
+		body{
+			font-family: Verdana;
+		}
+
+	</style>
+</head>
+<body>
+	<div>Div1</div>
+	<div>Div2</div>
+
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+	<script type="text/javascript">		
+		function beenClicked(){
+			alert('clicked');
+
+		}
+
+		let divs = document.getElementsByTagName('div')
+
+		divs[0].onclick = beenClicked;
+		divs[1].addEventListener('click', beenClicked);
+//these do not work because they are not proper syntax for what is expected
+//		divs[0].click = beenClicked;
+//		divs[1].addEventListener('onclick', beenClicked);
+
+
+	</script>
+
+</body>
+</html>

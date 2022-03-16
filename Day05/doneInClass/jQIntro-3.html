@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>jQuery Intro</title>
+	<style type="text/css">
+		body{
+			font-family: Verdana;
+		}
+
+		.blue{
+			color: blue;
+		}
+
+		.red{
+			color: red;
+		}
+
+		.green{
+			color: green;
+		}
+
+	</style>
+</head>
+<body>
+	<div id="my-div">A Div with Id</div>
+	<p id="para-1">A paragraph with Id: #para-1</p>
+	<p id="para-2">A paragraph with Id: #para-2</p>
+	<p class="blue">A paragraph with class blue</p>
+	<p class="blue">A paragraph with class blue</p>
+	<input type="button" value="Change Class" id="my-btn">
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+	<!-- 
+		all jQ plugins go here and any scripts that are dependent on jQ 
+		or its plugins must follow after 
+	-->
+	<script type="text/javascript">		
+	//custom script
+	$('#my-div').css({
+		'background-color': '#41be96',
+		border: '1px solid black',
+		borderRadius: '5px'
+	})
+//click is a shortcut event listener
+	$('#my-btn').click( function(){
+
+		$('p').each( function(){
+			let thisP = $(this);
+			if(thisP.hasClass('blue')){
+			console.log('has class blue');
+			thisP.addClass('red');		
+		}else{
+		console.log('else')
+			thisP.addClass('green').removeClass('red');
+		
+		}
+
+		})
+		
+
+	})//click function for #my-btn
+
+	//.dblClick()
+
+
+
+
+	</script>
+</body>
+</html>
