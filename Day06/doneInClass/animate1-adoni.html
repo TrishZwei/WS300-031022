@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>jQuery Template</title>
+	<style type="text/css">
+		body{
+			font-family: Verdana;
+		}
+
+		#my-div{
+			position: relative;
+			width: 200px;
+			height: 100px;
+			box-sizing: border-box;
+			padding: 20px;
+			background-color:cornflowerblue;
+			border: 1px solid black;
+			font-size: 16px;
+			pointer-events: none;
+		}
+
+		button{
+			margin: 5px;
+		}
+
+	</style>
+</head>
+<body>
+	<div id="my-div"><p>Animate Me!</p></div>
+	<button id="grow-right">Grow Right</button>
+	<button id="grow-text">Grow Text</button>
+	<button id="move-right">Move Right</button>
+	<button id="all-props">All Properties</button>
+	<button id="div-reset">Reset</button>
+
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+	<script type="text/javascript">
+		//my custom script
+		'use strict';
+		let theDiv = $('#my-div');
+
+		$('#grow-right').click( function(){
+			//syntax for animate: $(selector).animate({property:value, ...}, duration, easing, callback)
+
+			theDiv.animate({'width': '+=50px'}, 1000, 'linear', function(){
+				console.log('I am done animating!');
+
+			})
+
+		})
+
+		$('#grow-text').click( function(){
+			theDiv.children('p').animate({fontSize: '+=5px'}, 1000);
+
+		})
+
+		$('#move-right').click( function () {
+			theDiv.animate({'left':'+=20px'}, 750);
+
+		})
+
+		$('#all-props').click( function(){
+
+			theDiv.animate({'width':'+=50px', 'left':'+=20px'}, 500);
+			theDiv.children('p').animate({fontSize: '+=5px'}, 1000);
+
+		})
+
+		$('#div-reset').click( function(){
+			$('#my-div, #my-div p').attr('style', '');
+
+		})
+
+
+
+	</script>
+</body>
+</html>

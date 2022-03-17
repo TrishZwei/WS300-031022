@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>jQuery Transit</title>
+	<style type="text/css">
+		body{
+			font-family: Verdana;
+		}
+
+		#my-div{
+			position: relative;
+			width: 200px;
+			height: 100px;
+			box-sizing: border-box;
+			padding: 20px;
+			background-color:cornflowerblue;
+			border: 1px solid black;
+			font-size: 16px;
+			pointer-events: none;
+		}
+
+		button{
+			margin: 5px;
+		}
+
+	</style>
+</head>
+<body>
+	<div id="my-div"><p>Animate Me!</p></div>
+	<button id="grow-right">Grow Right</button>
+	<button id="grow-text">Grow Text</button>
+	<button id="move-right">Move Right</button>
+	<button id="all-props">All Properties</button>
+	<button id="apply-transit">Transit!</button>
+	<button id="div-reset">Reset</button>
+
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.transit/0.9.12/jquery.transit.min.js" integrity="sha512-ueXKWOB9liraz677EVGxz6H8nLk3RJjNv8Bfc0WrO9K9NyxROX3D/6bvZ9RYvAcYFxsVU+I0Jt/AMK0Nk8ya5g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script type="text/javascript">
+		//my custom script using transit
+		'use strict';
+		let theDiv = $('#my-div');
+		let color1 = 'cornflowerblue';
+		let color2 = 'rebeccapurple';
+		let isBlue = true;
+		let theColor; 
+
+		/*
+		 *@param ani: value of id of button clicked
+		*/
+		function customAnimate(ani){
+
+			switch(ani){
+				case 'grow-right':
+					theDiv.transition({'width': '+=50px'}, 1000, 'linear', function(){
+					console.log('I am done animating!');
+		 			})
+				break;
+
+				case 'grow-text':
+					theDiv.children('p').transition({fontSize: '+=5px'}, 1000);
+				break;
+
+				case 'move-right':
+					theDiv.transition({'x':'+=20px'}, 750);
+				break;
+
+				case 'all-props':
+					theDiv.transition({'width':'+=50px', 'x':'+=20px'}, 500);
+					theDiv.children('p').transition({fontSize: '+=5px'}, 1000);
+				break;
+
+				case 'apply-transit':
+					if(isBlue == true){
+						theColor = color2;
+						isBlue = false;
+					}else{
+						theColor = color1;
+						isBlue = true;
+
+					}
+
+					theDiv.transition({'perspective':'100px', 'rotateX':'+=180deg', 'background-color': theColor}, 3000, 'cubic-bezier(1,-0.54,1,-0.32)');
+				break;
+
+				default:
+				//div reset code:
+					$('#my-div, #my-div p').attr('style', '');
+				break;
+
+
+			}
+
+		}//custom animate function end
+
+
+		$('button').click( function(){
+			let theId = $(this).attr('id');
+			console.log(theId);
+			customAnimate(theId);
+
+		})
+
+
+
+
+ 
+// 		$('#grow-right').click( function(){
+// 			//syntax for animate: $(selector).animate({property:value, ...}, duration, easing, callback)
+
+// 			theDiv.transition({'width': '+=50px'}, 1000, 'linear', function(){
+// 				console.log('I am done animating!');
+
+// 			})
+
+// 		})
+
+// 		$('#grow-text').click( function(){
+// 			theDiv.children('p').transition({fontSize: '+=5px'}, 1000);
+
+// 		})
+
+// 		$('#move-right').click( function () {
+// 			theDiv.transition({'x':'+=20px'}, 750);
+
+// 		})
+
+// 		$('#all-props').click( function(){
+
+// 			theDiv.transition({'width':'+=50px', 'x':'+=20px'}, 500);
+// 			theDiv.children('p').transition({fontSize: '+=5px'}, 1000);
+
+// 		})
+
+// 		$('#apply-transit').click( function(){
+// 			let theColor; //reserving space for setting the color value
+
+// 			if(isBlue == true){
+// 				theColor = color2;
+// 				isBlue = false;
+// 			}else{
+// 				theColor = color1;
+// 				isBlue = true;
+
+// 			}
+
+// 			theDiv.transition({'perspective':'100px', 'rotateX':'+=180deg', 'background-color': theColor}, 3000, 'cubic-bezier(1,-0.54,1,-0.32)');
+// //cubic-bezier(1,-0.54,0,1.43)
+
+// 		})
+
+// 		$('#div-reset').click( function(){
+// 			$('#my-div, #my-div p').attr('style', '');
+
+// 		})
+
+
+
+	</script>
+</body>
+</html>
