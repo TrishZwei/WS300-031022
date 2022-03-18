@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Dragon Flight 1</title>
+	<style type="text/css">
+		body{
+			font-family: Verdana;
+			font-size: 18px;
+			margin: 0 auto;
+		}
+
+		.dragon{
+			position: absolute;
+			top: 100px;
+			left: 100px;
+			width: 50px;
+			height: 50px;
+			background-color: limegreen;
+		}
+
+		.stage{
+			position: absolute;
+			top: 30px;
+			left: 10px;
+			right: 10px;
+			bottom: 10px;
+			background-color: #add;
+			border: 1px solid black;
+			overflow: hidden;
+		}
+
+		.flame{
+		    width: 10px;
+		    height: 4px;
+		    background-color: red;
+		    position: absolute;
+		    top: 100px;
+		    left: 100px;
+		}
+
+
+
+	</style>
+</head>
+<body>
+	<div class="stage">
+		<div class="dragon"></div>
+	</div>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+	<script type="text/javascript">
+		//custom script:
+		'use strict';
+		let dragon = $('.dragon'), //our dragon
+		    stage = $('.stage'), //our game stage
+		    gameRunning = false, //shows if the game is currently running
+		    speed = 6;
+
+		let dir = {
+					up:false,
+					down:false,
+					left:false,
+					right:false
+					}    
+		//dir is an object literal: propertyName:propertyValue, propertyName:propertyValue, ...
+
+	//event listeners:
+
+	$(document).keydown( function(e){
+		//e.which tells me which key is down:
+
+		//arrows: up:38, down:40, left:37, right:39
+		//aswd: w:87, s:83, a:65, d:68
+
+		if(e.which == 38 || e.which == 87){
+			//up
+			dir.up = true;
+		}
+
+		if(e.which == 40 || e.which == 83){
+			//down
+			dir.down = true;
+		}
+
+		if(e.which == 37 || e.which == 65){
+			//left
+			dir.left = true;
+		}
+
+		if(e.which == 39 || e.which == 68){
+			//right
+			dir.right = true;
+		}
+
+		//increase speed:
+		if(e.which == 16){
+			speed = 10;
+		}
+
+
+
+//		console.log(dir)
+		if(e.which == 32){
+			//console.log('fire');
+			shootFlame();
+		}
+
+
+
+	}) //end key down
+
+
+	$(document).keyup( function(e){
+		//e.which tells me which key is down:
+
+		//arrows: up:38, down:40, left:37, right:39
+		//aswd: w:87, s:83, a:65, d:68
+
+		if(e.which == 38 || e.which == 87){
+			//up
+			dir.up = false;
+		}
+
+		if(e.which == 40 || e.which == 83){
+			//down
+			dir.down = false;
+		}
+
+		if(e.which == 37 || e.which == 65){
+			//left
+			dir.left = false;
+		}
+
+		if(e.which == 39 || e.which == 68){
+			//right
+			dir.right = false;
+		}
+
+		//regular speed:
+		if(e.which == 16){
+			speed = 6;
+		}
+
+
+
+		//console.log(dir)
+		// if(e.which == 32){
+		// 	//console.log('fire');
+		// 	shootFlame();
+		// }
+
+	})//end keyup
+
+
+	//function runs frequently so that the dragon moves around
+	function gameLoop(){
+		let newTop = 0, //dragon's top
+		    newLeft = 0; //dragon's left
+
+		   if(dir.up){
+		   	//if it is true do this code:
+		   	newTop -= speed;
+		   }
+
+		   if(dir.down){
+		   	//if it is true do this code:
+		   	newTop += speed;
+		   }
+
+		   if(dir.left){
+		   	newLeft -= speed;
+		   }
+
+		   if(dir.right){
+		   	newLeft += speed;
+		   }
+
+		   let dTop = dragon.position().top,
+		       dLeft = dragon.position().left,
+		       dHeight = 50, //static value
+		       dWidth = 50,
+		       sHeight = stage.height(),//dynamic value
+		       sWidth = stage.width(); 
+
+		       //check the boundaries BEFORE applying our CSS to dragon
+		       if(dTop+newTop < 0){
+		       	newTop = 0;
+		       	newTop -= dTop;
+		       }
+
+		       if(dLeft+newLeft < 0){
+		       	newLeft = 0;
+		       	newLeft -= dLeft;
+		       }
+
+		       //dynamic values of right and bottom
+
+		       if(dTop+newTop+dHeight > sHeight){
+		       	newTop = 0;
+		       	newTop+=(sHeight-dHeight-dTop);
+		       }
+
+		       if(dLeft+newLeft+dHeight > sWidth){
+		       	newLeft = 0;
+		       	newLeft+=(sWidth-dWidth-dLeft);
+		       }
+
+       //apply new values to dragon
+       dragon.css({top:'+='+newTop, left:'+='+newLeft})
+     //  console.log('loop');
+//		       setTimeout(gameLoop, 1000/30);
+
+		//window is the default object for JS
+		requestAnimationFrame(gameLoop)
+
+	}//end gameLoop
+
+	//timer:
+	//setInterval(gameLoop, 1000/30); //30fps
+	//setTimeout(gameLoop, 1000/30);
+	window.requestAnimationFrame(gameLoop)
+
+
+	//shooting our fire
+
+	function shootFlame(){
+		let flame = $('<div>').addClass('flame');
+
+		//add coordinates relative to dragon's current position
+		let dTop = dragon.position().top,
+			dLeft = dragon.position().left,
+			fTop = dTop+23, //middle 
+			fLeft = dLeft+50; //riht hand side
+
+		flame.css({top:fTop, left:fLeft});
+		stage.append(flame);
+
+		flame.animate({left:stage.width()+100}, 1000, function(){
+			//when animation is complete:
+			$(this).remove();
+
+		})
+
+
+	}//end shootFlame()
+
+	</script>
+
+</body>
+</html>
