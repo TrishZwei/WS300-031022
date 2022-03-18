@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>jQuery Template</title>
+	<style type="text/css">
+		body{
+			font-family: Verdana;
+		}
+
+	</style>
+</head>
+<body>
+	<button>Click Me.</button>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+	<script type="text/javascript">
+		'use strict';
+		//some variables:
+		//1st question
+/*		var greeting = 'Hello World!';
+
+		function stateGreeting(){
+			greeting = 'Stuff!';
+			alert(greeting);
+		}
+
+		alert(greeting);
+
+		stateGreeting();
+		stateGreeting2();
+
+		console.log(greeting); 
+
+		function stateGreeting2(){
+			var greeting = 'Stuff also!';
+			alert(greeting);
+		}
+
+		console.log(greeting); 
+*/
+
+//second question:
+
+let colors = ['darkblue', 'rebeccapurple', 'lavender', 'white']
+let btn = $('button');
+
+
+btn.click(function(){
+	btn.css({'background-color':colors[getRandInt(0,3)]});
+	checkColor(btn)
+}) 
+
+//function to generate a whole random interger
+	//@2param: numbers
+	function getRandInt(min = 1, max = 100){
+		return Math.floor(Math.random() *(max-min +1))+min;
+	}
+
+	function checkColor(ele){
+		let bgColor = ele[0].style.backgroundColor;
+		console.log(bgColor);
+		if(bgColor == 'rebeccapurple' || bgColor == 'darkblue'){
+			btn.css({'color':'white'})
+		}else{
+			btn.css({'color': 'black'});
+		}
+
+	}
+
+	</script>
+</body>
+</html>
