@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Random Name Generator</title>
+	<style type="text/css">
+		body{
+			font-family: Verdana;
+		}
+
+		.full-name{
+			border: 1px solid black;
+		}
+
+		.button{
+			background-color: rebeccapurple;
+			color: white;
+			border-radius: 20px;
+			padding: .5em;
+			width: fit-content;
+			margin-top: 5px;
+			cursor: pointer;
+		}
+	</style>
+</head>
+<body>
+	<div class="full-name">Your new name: <span></span></div>
+	<div class="button">Get My New Name!</div>
+	<!-- TODO: update demo with real button !-->
+
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+	<script type="text/javascript">
+		'use strict';
+		$('.button').on('click', function(){
+			const firstNames = ['Morgan', 'Adoni', 'Andy']; 
+			//for demo purposes add 'andy' to end.
+			firstNames.push('Trish');
+			// console.log(firstNames.pop(), firstNames); //removes Trish
+			// console.log(firstNames.sort()); //sorts alphabetically based off of character code;
+			// console.log(firstNames.reverse()); //reverses order of items
+			// console.log(firstNames.shift()); //removes first item
+			// console.log(firstNames);
+
+			const lastNames = ['Stark', 'Baratheon', 'Lannister', 'Tyrel', 'Tully', 'Arryn', 'Greyjoy', 'Targaryen'];
+
+			let middleInitials = 'abcdefghijklmnopqrstuvwxyz'; //since this is a string I can use string methods on it
+				middleInitials = middleInitials.toUpperCase();//resets the string's value to be all uppercase
+				middleInitials = middleInitials.split(''); //splitting by '' AKA the no-character, makes each character in the string its own item in an array.
+			const fName = firstNames[getRandomInt(0, firstNames.length-1)];
+			const initial = middleInitials[getRandomInt(0, middleInitials.length-1)];
+			const lName = lastNames[getRandomInt(0, lastNames.length-1)];	
+
+			let fullName = `${fName} ${initial}. ${lName}`;
+
+
+
+			// let fullName = `${firstNames[getRandomInt(0, firstNames.length-1)]}
+			// 				${middleInitials[getRandomInt(0, middleInitials.length-1)]}. 	 
+			// 				${lastNames[getRandomInt(0, lastNames.length-1)]}`;
+			console.log(fullName);
+
+			$('.full-name span').text(fullName);
+
+		})
+
+
+		function getRandomInt(min = 1, max = 100){
+			return Math.floor( Math.random() * (max - min + 1) ) + min
+		}
+
+
+	</script>
+</body>
+</html>

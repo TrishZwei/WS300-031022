@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>jQuery Template</title>
+	<style type="text/css">
+		body{
+			font-family: Verdana;
+			font-size: 20px;
+			margin: 0 auto;
+		}
+
+		.strike{
+			text-decoration: line-through;
+		}
+
+		h1{
+			text-align: center;
+		}
+
+		input {
+			display: block;
+			height: 40px;
+			font-size: 1em;
+			margin: 0 auto 5px;
+		}
+
+		.button{
+			background-color:grey;
+			color:white;
+			border-radius: 20px;
+			width: 100px;
+			height: 40px;
+			padding: 5px;
+			line-height: 40px;
+			margin: 5px auto;
+		}
+
+		.wrapper{
+			margin: 0 auto;
+			width: 500px;
+		}
+	</style>
+</head>
+<body>
+	<div class="wrapper">
+		<h1>Store List</h1>
+		<ul id="store-list">
+			<!-- empty on purpose -->
+		</ul>		
+		<input type="text" id="new-item">
+		<input type="number" id="item-qty" min="1" placeholder="#">
+		<div class="button add">Add Item</div>
+		<div class="button clear">Clear List</div>
+	</div>
+
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+	<script type="text/javascript">
+		const storeList = [];
+		//when I click the add button
+			//1. get the value from the new-item input
+			//2. if value is not empty, add the value to the store list
+			//3. output that to the page
+				//create an li
+				//insert text into li
+				//insert li into ul.
+
+		const newItemEle = $('#new-item');
+		
+		$('.add').click( function(){
+			let newItem = newItemEle.val();
+				//helps with consistant sorting
+				newItem = newItem.toLowerCase(); 
+
+				if(newItem != ''){
+					var quantity = parseInt($('#item-qty').val());
+					if(quantity == 0 || isNaN(quantity) || quantity == ''){
+						quantity = 1;
+					}
+					newItem +='-'+quantity;
+					storeList.push(newItem)
+					storeList.sort();
+					console.log(storeList);
+					$('#store-list').text('');
+
+					for(let i = 0; i < storeList.length; i++){
+						let theItem = storeList[i];
+
+						//create a new li:
+						let newLi = $('<li>');
+						newLi.text(theItem);
+						newLi.appendTo('#store-list');
+
+					}
+
+
+				}
+
+
+		})			
+
+
+
+	</script>
+</body>
+</html>
