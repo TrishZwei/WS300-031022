@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>jQuery Template</title>
+	<title>Store List V4</title>
 	<style type="text/css">
 		body{
 			font-family: Verdana;
@@ -56,7 +56,7 @@
 
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 	<script type="text/javascript">
-		const storeList = [];
+		let storeList = [];
 		//when I click the add button
 			//1. get the value from the new-item input
 			//2. if value is not empty, add the value to the store list
@@ -68,7 +68,10 @@
 		const newItemEle = $('#new-item');
 		
 		$('.add').click( function(){
+			let innerArray = [];
+
 			let newItem = newItemEle.val();
+				newItem = newItem.trim(); 
 				//helps with consistant sorting
 				newItem = newItem.toLowerCase(); 
 
@@ -77,22 +80,34 @@
 					if(quantity == 0 || isNaN(quantity) || quantity == ''){
 						quantity = 1;
 					}
-					newItem +='-'+quantity;
-					storeList.push(newItem)
-					storeList.sort();
-					console.log(storeList);
+					let theItem = {
+									text: newItem, 
+									amt: quantity, 
+									strike: false}
+					storeList.push(theItem); //pushes the inner array into the storeList
+					//storeList.sort();
+					storeList.sort(compare);
+					console.log('is this sorted: ', storeList);
 					$('#store-list').text('');
 
 					for(let i = 0; i < storeList.length; i++){
-						let theItem = storeList[i];
+							let theText = storeList[i].text;
+							let theQty = storeList[i].amt;
+							let strike = storeList[i].strike;
+
 
 						//create a new li:
 						let newLi = $('<li>');
-						newLi.text(theItem);
+						newLi.text(theText+'-'+theQty);
+						if(strike){
+							newLi.addClass('strike');
+						}
+
 						newLi.appendTo('#store-list');
 
 						newLi.click( function(){
-							$(this).addClass('strike');
+							//$(this).addClass('strike');
+							strikeItem(newLi);
 						})
 
 
@@ -101,15 +116,39 @@
 
 				}
 
-
 		})	
 
+		function strikeItem(theItem){
+			//theItem is the newLi when it was created
+			theItem = $(theItem); //making sure that the element is a jQ object
+			theItem.addClass('strike');
 
-//no lis on DOM when this code is read
-		// $('ul li').click( function(){
-		// 	$(this).addClass('strike');
+			//testing index value:
+			let index = theItem.index();
+			console.log(index, storeList[index]);
+			storeList[index].strike = true;
+			
 
-		// })		
+		}
+
+
+function compare( a, b ) {
+  if ( a.text < b.text ){
+    return -1;
+  }
+  if ( a.text > b.text ){
+    return 1;
+  }
+  return 0;
+}
+
+
+$('.clear').click( function() {
+	storeList = [];
+	$('#store-list').text('');
+
+})
+	
 
 
 

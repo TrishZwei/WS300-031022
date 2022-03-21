@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>jQuery Template</title>
+	<title>Store List V2</title>
 	<style type="text/css">
 		body{
 			font-family: Verdana;
@@ -68,7 +68,10 @@
 		const newItemEle = $('#new-item');
 		
 		$('.add').click( function(){
+			let innerArray = [];
+
 			let newItem = newItemEle.val();
+				newItem = newItem.trim(); 
 				//helps with consistant sorting
 				newItem = newItem.toLowerCase(); 
 
@@ -77,22 +80,33 @@
 					if(quantity == 0 || isNaN(quantity) || quantity == ''){
 						quantity = 1;
 					}
-					newItem +='-'+quantity;
-					storeList.push(newItem)
+
+					innerArray.push(newItem)
+					innerArray.push(quantity);
+					innerArray.push(false); //stores if the class of  strike needs to be applied;
+					storeList.push(innerArray); //pushes the inner array into the storeList
 					storeList.sort();
 					console.log(storeList);
 					$('#store-list').text('');
 
 					for(let i = 0; i < storeList.length; i++){
-						let theItem = storeList[i];
+							let theText = storeList[i][0];
+							let theQty = storeList[i][1];
+							let strike = storeList[i][2]
+
 
 						//create a new li:
 						let newLi = $('<li>');
-						newLi.text(theItem);
+						newLi.text(theText+'-'+theQty);
+						if(strike){
+							newLi.addClass('strike');
+						}
+
 						newLi.appendTo('#store-list');
 
 						newLi.click( function(){
-							$(this).addClass('strike');
+							//$(this).addClass('strike');
+							strikeItem(newLi);
 						})
 
 
@@ -101,8 +115,29 @@
 
 				}
 
-
 		})	
+
+		function strikeItem(theItem){
+			//theItem is the newLi when it was createed
+			theItem = $(theItem); //making sure that the element is a jQ object
+			theItem.addClass('strike');
+			
+			let theText = theItem.text(); //name-qty
+			theText = theText.split('-');
+			theText = theText[0];
+
+			for(let i = 0; i < storeList.length; i++){
+				if(theText == storeList[i][0]){
+					storeList[i][2] = true;
+				}
+			}
+
+
+		}
+
+
+
+
 
 
 //no lis on DOM when this code is read
