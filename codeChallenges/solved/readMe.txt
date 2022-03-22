@@ -1,1 +1,0 @@
-When code challenges are completed in class the solutions will be posted here.
