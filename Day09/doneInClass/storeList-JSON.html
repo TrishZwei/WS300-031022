@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Store List V3</title>
+	<style type="text/css">
+		body{
+			font-family: Verdana;
+			font-size: 20px;
+			margin: 0 auto;
+		}
+
+		.strike{
+			text-decoration: line-through;
+		}
+
+		h1{
+			text-align: center;
+		}
+
+		input {
+			display: block;
+			height: 40px;
+			font-size: 1em;
+			margin: 0 auto 5px;
+		}
+
+		.button{
+			background-color:grey;
+			color:white;
+			border-radius: 20px;
+			width: 100px;
+			height: 40px;
+			padding: 5px;
+			line-height: 40px;
+			margin: 5px auto;
+		}
+
+		.wrapper{
+			margin: 0 auto;
+			width: 500px;
+		}
+	</style>
+</head>
+<body>
+	<div class="wrapper">
+		<h1>Store List</h1>
+		<ul id="store-list">
+			<!-- empty on purpose -->
+		</ul>		
+		<input type="text" id="new-item">
+		<input type="number" id="item-qty" min="1" placeholder="#">
+		<div class="button add">Add Item</div>
+		<div class="button clear">Clear List</div>
+	</div>
+
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+	<script type="text/javascript">
+		let storeList = [];
+		//when I click the add button
+			//1. get the value from the new-item input
+			//2. if value is not empty, add the value to the store list
+			//3. output that to the page
+				//create an li
+				//insert text into li
+				//insert li into ul.
+
+		const newItemEle = $('#new-item');
+		
+		$('.add').click( function(){
+			let jsObj = {};
+				//items in jsObj will be text:, amt, strike
+			let newItem = newItemEle.val();
+				newItem = newItem.trim(); 
+				//helps with consistant sorting
+				newItem = newItem.toLowerCase(); 
+
+				if(newItem != ''){
+					var quantity = parseInt($('#item-qty').val());
+					if(quantity == 0 || isNaN(quantity) || quantity == ''){
+						quantity = 1;
+					}
+					jsObj.text = newItem;
+					jsObj.amt = quantity;
+					jsObj.strike = false; //stores if the class of  strike needs to be applied;
+					storeList.push(jsObj); //pushes the inner array into the storeList
+					//with no comparison function will not sort objects
+					storeList.sort(compare);
+					
+					console.log(storeList);
+					$('#store-list').text('');
+
+					for(let i = 0; i < storeList.length; i++){
+							let theText = storeList[i].text;
+							let theQty = storeList[i].amt;
+							let strike = storeList[i].strike;
+
+
+						//create a new li:
+						let newLi = $('<li>');
+						newLi.text(theText+'-'+theQty);
+						if(strike){
+							newLi.addClass('strike');
+						}
+
+						newLi.appendTo('#store-list');
+
+						newLi.click( function(){
+							//$(this).addClass('strike');
+							strikeItem(newLi);
+						})
+
+
+					}
+
+
+				}
+
+		})	
+
+		function strikeItem(theItem){
+			//theItem is the newLi when it was createed
+			theItem = $(theItem); //making sure that the element is a jQ object
+			theItem.addClass('strike');
+
+			//testing index value:
+			let index = theItem.index();
+			console.log(index, storeList[index]);
+			storeList[index][2] = true;
+			
+
+		}
+
+		$('.clear').click( function() {
+			storeList = [];
+			$('#store-list').text('');
+
+		})
+
+		function compare(a,b){
+			if(a.text < b.text){
+				return -1;
+			}
+			if(a.text > b.text){
+				return 1;
+			}
+			return 0;
+		}
+
+	
+
+
+
+	</script>
+</body>
+</html>

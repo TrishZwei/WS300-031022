@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Sock Game</title>
+	<style type="text/css">
+		body{
+			font-family: Verdana;
+		}
+
+		.card:hover{
+			cursor: pointer;
+		}
+
+		.card{
+			height: 220px;
+			width:121px;
+			transform-style: preserve-3d;
+			transition: transform 1s;
+			float: left;
+		}
+
+		.card div{
+			margin: 0;
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			backface-visibility: hidden;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.card .card-front{
+			background-image: url('socks/background.png');
+		}
+
+		.card .card-back{
+			transform: rotateY(180deg);
+		}
+
+		.card.flipped{
+			transform: rotateY(180deg);
+		}
+
+		.sock.pink{
+			background-image: url('socks/pinksock.png');
+		}
+
+		.sock.blue{
+			background-image: url('socks/bluesock.png');
+		}
+
+		.sock.red{
+			background-image: url('socks/redsock.png');
+		}
+
+		.sock.purple{
+			background-image: url('socks/purplesock.png');
+		}
+
+	</style>
+</head>
+<body>
+	<h1>Find the Pink Sock</h1>
+	<div class="card-container">
+		<div class="card">
+			<div class="card-front background"></div>
+			<div class="card-back sock"></div>
+		</div>
+		<div class="card">
+			<div class="card-front background"></div>
+			<div class="card-back sock"></div>
+		</div>
+		<div class="card">
+			<div class="card-front background"></div>
+			<div class="card-back sock"></div>
+		</div>
+		<div class="card">
+			<div class="card-front background"></div>
+			<div class="card-back sock"></div>
+		</div>
+		<div class="card">
+			<div class="card-front background"></div>
+			<div class="card-back sock"></div>
+		</div>
+		<div class="card">
+			<div class="card-front background"></div>
+			<div class="card-back sock"></div>
+		</div>
+		<div class="card">
+			<div class="card-front background"></div>
+			<div class="card-back sock"></div>
+		</div>
+	</div>
+
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+	<script type="text/javascript">
+		let classArray = ['blue', 'red', 'purple', 'pink', 'blue', 'red', 'purple'];
+//game setup
+		$('.sock').each( function(){
+			let theClass = ''+classArray.splice(getRandInt(0, classArray.length-1), 1);
+			console.log(classArray, theClass);
+			$(this).addClass(theClass);
+
+
+		})
+
+
+
+
+
+
+		//random number generator
+		function getRandInt(min = 1, max = 100){
+			return Math.floor( Math.random() * (max - min +1) ) + min;
+		}
+
+
+	</script>
+</body>
+</html>
