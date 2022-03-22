@@ -63,6 +63,7 @@
 </head>
 <body>
 	<h1>Find the Pink Sock</h1>
+	<p>You have three tries</p>
 	<div class="card-container">
 		<div class="card">
 			<div class="card-front background"></div>
@@ -96,17 +97,45 @@
 
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 	<script type="text/javascript">
+		'use strict';
 		let classArray = ['blue', 'red', 'purple', 'pink', 'blue', 'red', 'purple'];
+		let tries = 0;
 //game setup
 		$('.sock').each( function(){
 			let theClass = ''+classArray.splice(getRandInt(0, classArray.length-1), 1);
 			console.log(classArray, theClass);
 			$(this).addClass(theClass);
 
-
 		})
 
 
+		$('.card').click( function() {
+			let card = $(this);
+			tries++;
+			let message = 'You have '+(3-tries)+' tries left.';
+			card.addClass('flipped');
+			let sock = card.children('.sock');
+
+			if(tries <= 3 && sock.hasClass('pink')){
+				$('.card').off();
+				message = 'You Win!';
+				// setTimeout(function(){
+				// alert('You win!')
+
+				// }, 500)
+			}else if(tries >= 3){
+				message+=' You Lose';
+				// setTimeout(function(){
+				// alert('You Lose!')
+
+				// }, 500)
+				$('.card').off();
+
+			}
+
+			$('p').text(message)
+
+		})
 
 
 
