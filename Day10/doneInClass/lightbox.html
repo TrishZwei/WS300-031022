@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Lightbox</title>
+	<style type="text/css">
+		body{
+			font-family: Verdana;
+			line-height: 1.5;
+		}
+
+		.overlay{
+			position: fixed;
+			top: 0;
+			left: 0;
+			width:100%;
+			height: 100%;
+			background: rgba(0, 0, 0, .5);
+			opacity: 0;
+			transition: .5s ease;
+			z-index: -1;
+		}
+
+		.overlay.active{
+			opacity: 1;
+			z-index: 2;
+		}
+		.modal{
+			max-height: calc(100% - 100px);
+			position: fixed;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%) ;
+			color: #4a5666;
+			background-color: white;
+			max-width: 500px;
+			z-index: 3;
+			visibility: hidden;
+			opacity: 0;
+			transition: .5s ease;
+/*			padding: 1em;*/
+		}
+
+		.modal.active{
+			visibility: visible;
+			opacity: 1;
+		}
+
+
+		.modal h2{
+			margin: 0;
+			padding: 1rem;
+			border-bottom: 1px solid #dde0e7;
+		}
+
+		.modal p, .site-wrap p{
+			padding: 1rem;
+		}
+
+		button.close{
+			display: inline-block;
+			background: #fc6468;
+			border: 1px solid white;
+			font-size: 1.2rem;
+			padding: 1rem 2rem;
+			overflow: visible;
+			white-space: no-wrap;
+			border-radius:45px;
+		}
+
+		button.close:hover{
+			border: 1px solid gray;
+		}
+
+		button:focus{
+			outline: transparent;
+		}
+
+		.modal img{
+			width: 90%;
+			margin: 0 auto;
+		}
+
+		.lb-btn{
+			cursor: pointer;
+		}
+
+
+	</style>
+</head>
+<body>
+	<h1>Lightbox Demo</h1>
+	<img src="images/picsum/1050-150x150.jpg" class="lb-btn" data-content="images/picsum/1050-500x500.jpg" alt="Arpegio Straights"  title="Picture 1">
+	<img src="images/picsum/1057-150x150.jpg" class="lb-btn" data-content="images/picsum/1057-500x500.jpg" alt="Cliffside over the ocean" title="Picture 2">
+	<img src="images/picsum/1053-150x150.jpg" class="lb-btn" data-content="images/picsum/1053-500x500.jpg" alt="Seafoam from above" title="Picture 3">
+	<img src="images/picsum/1051-150x150.jpg" class="lb-btn" data-content="images/picsum/1051-500x500.jpg" alt="Beautiful Lake Pier" title="Picture 4">
+	<div class="overlay"></div>
+	<div class="modal">
+		<h2>Picture Title</h2>
+		<img src="images/picsum/1050-500x500.jpg">
+		<p>Description goes here.</p>
+		<button class="close">Close</button>
+	</div>
+	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+	tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+	quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+	consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+	cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+	proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+	tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+	quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+	consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+	cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+	proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+	tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+	quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+	consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+	cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+	proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+	<script type="text/javascript">
+		'use strict';
+		$('.lb-btn').click( function(){
+			//this is a keyword in JS
+			/*
+				title of the imge
+				path to full size of the image
+				description of the image
+				insert values into elements in the modal
+			*/
+
+			let img = $(this);
+			let theDesc = img.attr('alt'); //gives me the alt tag value
+			let thePath = img.data('content'); //gives me the value of the path to the larger image
+			let theTitle = img.attr('title'); //gets the value of the title attribute
+			$('.modal img').attr('src', thePath);
+			$('.modal h2').text(theTitle);
+			$('.modal p').text(theDesc);
+			$('.modal, .overlay').addClass('active');
+
+		})
+
+		$('.close, .overlay').click( function(){
+			$('.modal, .overlay').removeClass('active');
+		})
+
+
+
+	</script>
+</body>
+</html>

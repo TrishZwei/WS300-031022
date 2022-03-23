@@ -75,22 +75,26 @@
 		</div>
 </aside>
 	<nav id="main-nav" role="navigation">
-	<h2 class="hide">Site Navigation</h2>
-	<ul class="cf">
-		<li><a href="index.html">No JS<i class="demo-icon icon-home"></i></a></li>
-		<li><a href="anchor-js.html">Anchor<i class="demo-icon icon-coffee"></i></a></li>
-		<li><a href="toggle.html">Toggle<i class="demo-icon icon-picture"></i></a></li>
-		<li><a href="flyout.html">Flyout<i class="demo-icon icon-dollar"></i></a></li>
-		<li class="back-to-top"><a href="#menu">&uarr; Back to Top</a></li>
-	</ul>	
+		<h2 class="hide">Site Navigation</h2>
+		<ul class="cf">
+			<li><a href="index.html">No JS<i class="demo-icon icon-home"></i></a></li>
+			<li><a href="anchor-js.html">Anchor<i class="demo-icon icon-coffee"></i></a></li>
+			<li><a href="toggle.html">Toggle<i class="demo-icon icon-picture"></i></a></li>
+			<li><a href="flyout.html">Flyout<i class="demo-icon icon-dollar"></i></a></li>
+			<li class="back-to-top"><a href="#menu">&uarr; Back to Top</a></li>
+		</ul>	
 	</nav>
 <footer id="page-foot">
 	<small>&copy; 2017 We Love Coffee</small>	
 </footer>
 <!-- javascript functions that need to be called after page is loaded and DOM is ready -->
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+	<!-- jQ Plugin goes here -->
 <script type="text/javascript" src="scripts/jquery.smooth-scroll.js"></script>
 <script type="text/javascript">
+	//documentation: https://github.com/kswedberg/jquery-smooth-scroll
+	//reference the items you want so scroll between:
+	$('#menu a, li.back-to-top a').smoothScroll({speed:1000});
 
 </script>
 </body>

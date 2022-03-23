@@ -18,13 +18,19 @@
 <link rel="shortcut icon" href="favicons/favicon.ico">
 <meta name="msapplication-config" content="favicons/browserconfig.xml">
 <meta name="theme-color" content="#ffffff">	
+<style type="text/css">
+	#main-nav{
+		transition: all 1s;
+	}
+
+</style>
 
 </head>
 <body class="cf">
 <header id="main-head">
 	<h1>We Love Coffee</h1>
-	<h3 id="menu"><a href="#main-nav" title="open navigation"><i class="icon-menu"> </i>Menu</a></h3>
-		<nav id="main-nav" role="navigation">
+	<h3 id="menu"><a href="#main-nav" title="open navigation"><i class="menu icon-menu"> </i>Menu</a></h3>
+	<nav id="main-nav" role="navigation">
 	<h2 class="hide">Site Navigation</h2>
 	<ul class="cf">
 		<li><a href="index.html">No JS<i class="demo-icon icon-home"></i></a></li>
@@ -89,6 +95,18 @@
 <!-- javascript functions that need to be called after page is loaded and DOM is ready -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script type="text/javascript">
+	'use strict';
+	$('html').attr('class', 'js'); //does same as add/remove class by setting class to equal js
+	//shortest way to write evar!!!!
+
+		  $('#menu').click( function(e){
+		  	e.preventDefault();
+		  	$('#main-nav, #menu').toggleClass('active')
+		  $('i.menu').toggleClass('icon-menu icon-cancel-circled');
+
+
+
+		  })
 
 
 </script>

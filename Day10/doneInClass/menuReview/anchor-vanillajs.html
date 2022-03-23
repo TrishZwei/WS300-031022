@@ -6,6 +6,12 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css" href="css/normalize.css">
 	<link rel="stylesheet" type="text/css" href="css/styles-anchor.css">
+	<style type="text/css">
+		html{
+			scroll-behavior: smooth;
+		}	
+
+	</style>
 <!-- Google Fonts -->
 	<link href='http://fonts.googleapis.com/css?family=Josefin+Slab:700' rel='stylesheet' type='text/css'>
 	<link href='http://fonts.googleapis.com/css?family=Arvo' rel='stylesheet' type='text/css'>
@@ -18,19 +24,13 @@
 <link rel="shortcut icon" href="favicons/favicon.ico">
 <meta name="msapplication-config" content="favicons/browserconfig.xml">
 <meta name="theme-color" content="#ffffff">	
-<!-- https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_smooth_scroll -->
-<style>
-  html {
-    scroll-behavior: smooth;
-  }
-</style>
+
 </head>
 <body class="cf" id="body-top">
 <header id="main-head">
 	<h1>We Love Coffee</h1>
 	<!-- moved nav to the bottom -->
 	<h3 id="menu"><a href="#main-nav" title="go to navigation">&darr; Menu</a></h3>
-
 </header>
 <main>
 	<!-- create div for slider -->
@@ -81,21 +81,47 @@
 		</div>
 </aside>
 	<nav id="main-nav" role="navigation">
-	<h2 class="hide">Site Navigation</h2>
-	<ul class="cf">
-		<li><a href="index.html">No JS<i class="demo-icon icon-home"></i></a></li>
-		<li><a href="anchor-js.html">Anchor<i class="demo-icon icon-coffee"></i></a></li>
-		<li><a href="toggle.html">Toggle<i class="demo-icon icon-picture"></i></a></li>
-		<li><a href="flyout.html">Flyout<i class="demo-icon icon-dollar"></i></a></li>
-		<li class="back-to-top"><a href="#menu">&uarr; Back to Top</a></li>
-	</ul>	
+		<h2 class="hide">Site Navigation</h2>
+		<ul class="cf">
+			<li><a href="index.html">No JS<i class="demo-icon icon-home"></i></a></li>
+			<li><a href="anchor-js.html">Anchor<i class="demo-icon icon-coffee"></i></a></li>
+			<li><a href="toggle.html">Toggle<i class="demo-icon icon-picture"></i></a></li>
+			<li><a href="flyout.html">Flyout<i class="demo-icon icon-dollar"></i></a></li>
+			<li class="back-to-top"><a href="#menu">&uarr; Back to Top</a></li>
+		</ul>	
 	</nav>
 <footer id="page-foot">
 	<small>&copy; 2017 We Love Coffee</small>	
 </footer>
 <!-- javascript functions that need to be called after page is loaded and DOM is ready -->
-<script>
-	
+<script type="text/javascript">
+	document.querySelector('html').classlist = 'js';
+
+	//detect browser support for smooth scroll
+	const smoothScrollSupported = 'scrollBehavior' in document.documentElement.style; //returns true or false if supported or not'
+
+	if(!smoothScrollSupported){
+		//JS polyfill if smoothScrollSupported value is false:
+		document.querySelectorAll('a[href^="#"]').forEach( trigger => {
+			//arrow function syntax:
+			trigger.onclick = function(e){
+				e.preventDefault();
+				let hash = this.getAttribute('href');
+				let target = document.querySelector(hash);
+				let elementPosition = target.offsetTop;
+				let offsetPosition = elementPosition
+
+				window.scrollTo({
+					top:offsetPosition,
+					behavior: "smooth";
+				})
+			}
+
+		})
+
+
+	}
+
 
 </script>
 </body>
