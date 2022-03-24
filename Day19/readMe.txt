@@ -1,0 +1,1 @@
+AJAX w jQuery, expansions on ajax, iifes? Any advanced ES6 things that are missing

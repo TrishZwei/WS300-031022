@@ -1,0 +1,1 @@
+As files get placed in here, this file will be removed. This is to ensure that the folder gets published on github.
