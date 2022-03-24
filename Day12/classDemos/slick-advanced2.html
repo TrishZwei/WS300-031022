@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Slick Basic</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.css" integrity="sha512-wR4oNhLBHf7smjy0K4oqzdWumd+r5/+6QO/vDda76MW5iug4PT7v86FoEkySIJft3XA0Ae6axhIvHrqwm793Nw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.css" integrity="sha512-6lLUdeQ5uheMFbWm3CP271l14RsX1xtx+J5x2yeIDkkiBpeVTNhTqijME7GgRKKi6hCqovwCoBTlRBEC20M8Mg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<style type="text/css">
+		body{
+			font-family: Verdana, Arial, Sans;
+			font-size: 16px;
+		}
+
+		.container{
+			margin: 0 auto;
+			/*max-width: 500px;*/
+			text-align: center;
+			width: 90%;
+		}
+
+		.slick{
+			width: 350px;
+			height: 250px;
+			margin: 1em auto;
+		}	
+
+		.slick img{
+			width: 100%;
+
+		}
+
+		.slick-arrow{
+			background-color: gray;
+			border-radius: 50%;
+			box-sizing: border-box;
+
+		}
+
+		.slick-prev:hover, .slick-prev:focus, .slick-next:hover, .slick-next:focus{
+			background-color: gray;
+				
+
+		}
+</style>
+</head>
+<body>
+<header>
+	<h1>Demo Slick Basic</h1>
+</header>
+<main>
+	<div class="container">
+		<div class="slider">
+			<div><img src="images/picsum/1050-500x500.jpg"></div>
+		  	<div><img src="images/picsum/1051-500x500.jpg"></div>
+		  	<div><img src="images/picsum/1053-500x500.jpg"></div>
+		  	<div><img src="images/picsum/1057-500x500.jpg"></div>
+		</div>
+	</div>
+</main>
+
+
+
+<!-- jquery! -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<!-- any jQ Plugins go here -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js" integrity="sha512-XtmMtDEcNz2j7ekrtHvOVR4iwwaD6o/FUJe6+Zq+HgcCsk3kj4uSQQR8weQ2QVj1o0Pk6PwYLohm206ZzNfubg==" crossorigin="anonymous"></script>
+<script type="text/javascript">
+	//default: $('.slider').slick();
+	$('.slider').slick({
+  		centerMode: true,
+  centerPadding: '60px',
+  slidesToShow: 3,
+  responsive: [
+    {
+      breakpoint: 768,
+      settings: {
+        arrows: false,
+        centerMode: true,
+        centerPadding: '40px',
+        slidesToShow: 3
+      }
+    },
+    {
+      breakpoint: 480,
+      settings: {
+        arrows: false,
+        centerMode: true,
+        centerPadding: '40px',
+        slidesToShow: 1
+      }
+    }
+  ]
+});
+
+</script>
+</body>
+</html>
