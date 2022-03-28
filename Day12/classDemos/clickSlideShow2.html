@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Click Slide Show</title>
+	<style type="text/css">
+		body{
+			font-family: Verdana;
+		}
+
+		.outer-container{
+			position: relative;
+			max-width: 600px;
+			margin: 0 auto;
+			border: 1px solid black;
+		}
+
+
+		.inner-container{
+			position: relative;
+			overflow: hidden;
+		}
+
+		.slide-container{
+			width:100%;
+			max-width: 600px;
+			height: 0;
+			max-height: 400px;
+			padding-bottom: 66.6666666%;
+		/* 	padding bottom is relative to the width
+			600/400 = 1.5 aspect-ratio
+			100/1.5 = 66.66... %
+		*/
+			aspect-ratio:  3/2;
+			position: relative;
+			overflow: hidden;
+		}
+
+		.slide-container div.slide{
+			width: 100%;
+			padding: 0;
+			margin: 0;
+			position: absolute;
+			top: 0;
+			left: 0;
+		}
+		.slide-container div.slide img{
+			width: 100%;
+			max-width: 100%;
+			padding: 0;
+		}
+
+		.slide-arrow-container{
+			position: absolute;
+			top: calc(50% - 16px);
+			width: 100%;
+			height: 32px;
+		}
+
+		.slide-arrow-container::after {
+    		content: "";
+    		display: table;
+    		clear: both;
+		}
+		
+		.slide-arrow-container .prev.button,
+		.slide-arrow-container .next.button{
+			position: absolute;
+			top: 0;
+			outline: 0;
+			width: 32px;
+			height: 32px;
+			text-indent: -9999px;
+			z-index: 10;
+			right: 10px;
+			background: url('images/controls.png') no-repeat -43px 0px;
+		}
+
+
+			.slide-arrow-container .prev.button{
+				right:  unset;
+				left: 10px;
+				background: url('images/controls.png') no-repeat 0px 0px;
+			}
+
+
+
+
+
+	</style>
+</head>
+<body>
+	<h1>Side Slider</h1>
+	<div class="outer-container">
+		<div class="inner-container">
+			<div class="slide-container">
+				<div class="slide">	
+					<img src="images/slides/coffee1.jpg" title="best part of waking up" alt="delicious coffee">
+				</div>
+				<div class="slide">	
+					<img src="images/slides/coffee2.jpg" title="sharing is caring" alt="delicious coffee">
+				</div>
+				<div class="slide">	
+					<img src="images/slides/coffee3.jpg" title="coffee is love" alt="delicious coffee">
+				</div>
+				<div class="slide">	
+					<img src="images/slides/coffee4.jpg" title="you snooze you lose" alt="delicious coffee">
+				</div>				
+			</div><!-- end slide container -->	
+		</div><!-- end inner container -->
+		<div class="slide-arrow-container">	
+				<div class="prev button mouse-click">Prev</div>
+				<div class="next button mouse-click">Next</div>
+		</div>
+	</div><!-- end outer container -->
+	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+	tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+	quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+	consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+	cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+	proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+	<script type="text/javascript">
+		'use strict';
+
+		/*
+		create slides
+		create unique way to target each element
+		access controls for slider that progress to next slide OR previous slide
+				next arrow goes to next slide
+				prev arrow goes to previous slide
+		*/
+
+		let slideCount = 0, //count the number of slides on the page
+		    currentSlide = 1, //store the current slide value
+		    slidebox = $('.slide-container'), //the container of our slides
+		    slideNav = $('.slide-arrow-container'); //our slide nav
+
+//		    console.log($('.slide')); 
+//set up slider 
+			$('.slide').each( function(i){
+				if(i!=0){
+					//all the slides not at index 0
+					$(this).css({left:slidebox.width()})
+				}else{
+					$(this).addClass('current');
+				}
+
+				$(this).attr('id', i+1);
+				slideCount++;
+			})
+
+function nextSlide(){
+	removeClicks();
+	let incomingSlide = currentSlide+1;
+
+	if(incomingSlide > slideCount){
+		//if incomingSlide is bigger than the top id of our slides 
+		incomingSlide = 1;
+	}
+
+	$('#'+incomingSlide).addClass('current').animate({left:0}, 300);
+	$('#'+currentSlide).removeClass('current').animate({left:-slidebox.width()}, 300, 
+		function(){
+			$(this).css({left:slidebox.width()})
+			addClicks();
+		});
+
+	currentSlide = incomingSlide;
+
+}
+
+
+function prevSlide(){
+	removeClicks();
+	let incomingSlide = currentSlide - 1;
+
+	if(incomingSlide < 1){
+		incomingSlide = slideCount;
+	}
+
+	//animate out the current slide
+	//animate in the incoming slide
+	$('#'+currentSlide).removeClass('current').animate({left:slidebox.width()}, 300, addClicks)
+	$('#'+incomingSlide).addClass('current').css({left: -slidebox.width()}).animate({left:0}, 300)
+		currentSlide = incomingSlide;
+}
+
+//hold click event until I want it available:
+
+function addClicks(){
+//run nextSlide when next button gets clicked
+	$('.next').on('click', nextSlide);
+	$('.prev').on('click', prevSlide);
+
+}
+
+addClicks();
+
+function removeClicks(){
+	$('.prev, .next').off();
+}
+
+$(window).resize( function(){
+	//css styles are taking care of the responsiveness for us.
+	let sBoxW = slidebox.width();
+	$('.slide:not(".current")').css({left:sBoxW})
+	testWidth();
+});
+
+//we can use media queries to adjust the arrow container but let's explore JS option for this.
+
+function testWidth(){
+let wWidth =  $(window).innerWidth();
+
+	if(wWidth < 401){
+		slideNav.css({top: slidebox.outerHeight()+3});
+		let outerCH = $('.outer-container').height();
+		let arrowH = slideNav.height();
+		console.log(slidebox.height(),slidebox.innerHeight(), slidebox.outerHeight(), arrowH, outerCH);
+	}
+
+
+}
+
+testWidth();
+
+
+
+	</script>
+</body>
+</html>
