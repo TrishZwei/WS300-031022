@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Day of Birth</title>
+	<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+	<style type="text/css">
+		body{
+			font-family: Verdana;
+		}
+
+	</style>
+</head>
+<body>
+	<p>Date: <input type="text" id="date-input" placeholder="MM/DD/YYYY"></p>
+	<div class="message">Message</div>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+	<script type="text/javascript">
+		$('#date-input').datepicker().change( function(){
+			//.change fires when you are done changing the value
+
+			let theDate = $(this).val();
+			console.log(theDate);
+
+			//convert format from 11/04/1996 to 1996,10,4
+			theDate = theDate.split('/'); //converts string to array 
+			let m = theDate[0]-1;
+			let d = parseInt(theDate[1]);
+			let y = theDate[2]*1;
+
+			let birthday = new Date(y,m,d);
+			console.log(birthday);
+
+			let dayOfWeek = birthday.getDay();//gets value 0 - 6
+			let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+			let theDay = days[dayOfWeek];
+			let poem = ["And the child that is born on the Sabbath day is bonny and blithe, and good and gay","Monday's child is fair of face", "Tuesday's child is full of grace","Wednesday's child is full of woe", "Thursday's child has far to go","Friday's child is loving and giving", "Saturday's child works hard for his living" ];
+
+			let message = `You were born on ${theDay}. ${poem[dayOfWeek]}.`;
+			$('.message').text(message);	
+
+
+		})
+
+
+
+	</script>
+</body>
+</html>

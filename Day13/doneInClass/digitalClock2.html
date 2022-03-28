@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Digital Date and Time</title>
+	<style type="text/css">
+		*{
+			box-sizing: border-box;
+		}
+
+		body, html{
+			font-family: Verdana;
+			height: 100%;
+			width: 100%;
+			margin: 0;
+			padding: 0;
+			background-color: cadetblue;
+		}
+
+		#clock-display{
+			color: white;
+			text-align: center;
+			background-color: #3c2527;
+			border-radius: 20px;
+			width: 60%;
+			padding: 1em;
+			font-size: 1.8em;
+			min-width: 483px;
+			margin: 1em auto;
+		}
+
+		.clock, .date{
+			margin: 1em auto;
+		}
+
+		.clock div, .date div{
+			display:inline-block ;
+		}
+
+		.date div.colon{
+			margin-right: 5px;
+			margin-left: -5px;
+		}
+
+	</style>
+</head>
+<body>
+	<div id="clock-display">
+		<div class="clock">
+			<div class="hours">00</div>
+			<div class="colon">:</div>
+			<div class="minutes">00</div>
+			<div class="colon">:</div>
+			<div class="seconds">00</div>
+			<div class="merdiem">AM</div>			
+		</div>
+		<div class="date">
+			<div class="day">MONDAY</div>	
+			<div class="colon">,</div>
+			<div class="month">NOVEMBER</div>
+			<div class="the-date">02</div>
+			<div class="colon">,</div>
+			<div class="year">2021</div>			
+		</div>
+	</div>
+
+
+
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+	<script type="text/javascript">
+		'use strict';
+
+		function setClock(){
+		let today = new Date(); //gets current date and time based on computer info
+			//today.setHours(13)
+
+		//time stuff:
+		let cHour = today.getHours(),
+			cMins = today.getMinutes(),
+			cSecs = today.getSeconds(),
+			ampm;		
+
+			if(cHour < 12){
+				ampm = 'AM';
+			}else{
+				ampm = 'PM';
+			}
+
+			if(cHour > 11){
+				cHour-=12;
+			}
+
+			if(cHour == 0){
+				cHour = 12;
+			}
+
+			if(cHour < 10){
+				cHour = '0'+cHour;
+			}
+
+			if(cMins < 10){
+				cMins = '0'+cMins;
+			}
+			if(cSecs < 10){
+				cSecs = '0'+cSecs;
+			}
+
+
+			console.log(cHour, cMins, cSecs);
+			console.log(ampm)
+
+			$('.hours').text(cHour)
+			$('.minutes').text(cMins)
+			$('.seconds').text(cSecs)
+			$('.meridiem').text(ampm)
+
+			//date stuff:
+			let theDay = today.getDay(), //0-6 day of the week
+			    month = today.getMonth(), //0-11 months
+			    theDate = today.getDate(), //1-31 day of the month
+			    year = today.getFullYear(); //gets full 4 digits (getYear has been depricated)
+			    console.log(theDay, month, theDate, year)
+
+			const dayArray = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+			      monthArray = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];   
+			      $('.day').text(dayArray[theDay]);
+			      $('.month').text(monthArray[month]);
+			      $('.the-date').text(theDate);
+			      $('.year').text(year);
+			      window.requestAnimationFrame(setClock);
+		}
+		setClock();
+	</script>
+</body>
+</html>
