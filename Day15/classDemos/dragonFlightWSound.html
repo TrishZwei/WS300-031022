@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>Dragon Flight 2</title>
+	<title>Dragon Flight Sound</title>
 	<style type="text/css">
 		body{
 			font-family: Verdana;
@@ -10,13 +10,19 @@
 			margin: 0 auto;
 		}
 
+		h1{
+			width: 100%;
+			text-align: center;
+		}
+
 		.dragon{
 			position: absolute;
 			top: 100px;
 			left: 100px;
-			width: 50px;
-			height: 50px;
-			background-color: limegreen;
+			width: 200px;
+			height: 144px;
+			background-image: url('images/dragon2.png');
+			background-position: 0px 0px;
 		}
 
 		.stage{
@@ -25,15 +31,19 @@
 			left: 10px;
 			right: 10px;
 			bottom: 10px;
-			background-color: #add;
+			background-color: #59744B;
+			background-image: url('images/fullbackground.jpg');
+			background-position: 0px 0px;
+			background-repeat: repeat-x;
 			border: 1px solid black;
 			overflow: hidden;
 		}
 
 		.flame{
-		    width: 10px;
-		    height: 4px;
-		    background-color: red;
+		    width: 49px;
+		    height: 24px;
+		    background-image: url('images/flame2.png');
+		    background-position: -49px 0px;
 		    position: absolute;
 		    top: 100px;
 		    left: 100px;
@@ -43,19 +53,28 @@
 			position: absolute;
 			top: 100px;
 			left: 100px;
-			border: 1px solid black;
-			width: 50px;
-			height: 50px;
+			width: 72px;
+			height: 44px;
 		}
 
 		.enemy.blue{
-			background-color: cadetblue;
+			background-image: url('images/bluebird.png');
 		}
+
 		.enemy.purple{
-			background-color: purple;
+			background-image: url('images/purplebird.png');
+		}
+		.enemy.red{
+			background-image: url('images/redbird.png');
 		}
 
+		.enemy.green{
+			background-image: url('images/greenbird.png');
+		}
 
+		.enemy.pink{
+			background-image: url('images/pinkbird.png');
+		}
 
 	</style>
 </head>
@@ -73,7 +92,14 @@
 		    speed = 6, //speed of movement
 		    score = 0, //values of birds killed
 		    lives = 3, //no. of lives for dragon
-		    enemyInt = setInterval(createEnemy, 1500);
+		    enemyInt = setInterval(createEnemy, 1500),
+		    speedX = 0, //horizontal scroll of bg
+		    speedY = 0, //vertical scroll of bg
+		    sDir = 'right', //direction of scroll of bg
+		    curFrame = 0,
+		    flappingInt = setInterval(dragonFlap, 1000/10), //animation fps
+		    panAni, //stores the requestAnimationFrame for cancellation later
+		    woosh = new Audio('sounds/short-fireball-woosh.mp3');
 
 
 		let dir = {
@@ -84,9 +110,17 @@
 					}    
 		//dir is an object literal: propertyName:propertyValue, propertyName:propertyValue, ...
 
+	if(gameRunning == false ){
+		panAni = requestAnimationFrame(gameLoop);
+ 		gameRunning = true;
+		}
+
+
 	//event listeners:
 
 	$(document).keydown( function(e){
+
+		if(gameRunning == true){
 		//e.which tells me which key is down:
 
 		//arrows: up:38, down:40, left:37, right:39
@@ -124,6 +158,10 @@
 			//console.log('fire');
 			shootFlame();
 		}
+
+
+		}
+
 
 
 
@@ -197,8 +235,8 @@
 
 		   let dTop = dragon.position().top,
 		       dLeft = dragon.position().left,
-		       dHeight = 50, //static value
-		       dWidth = 50,
+		       dHeight = 124, //static value //frame size is 144 in height
+		       dWidth = 200,
 		       sHeight = stage.height(),//dynamic value
 		       sWidth = stage.width(); 
 
@@ -220,7 +258,7 @@
 		       	newTop+=(sHeight-dHeight-dTop);
 		       }
 
-		       if(dLeft+newLeft+dHeight > sWidth){
+		       if(dLeft+newLeft+dWidth > sWidth){
 		       	newLeft = 0;
 		       	newLeft+=(sWidth-dWidth-dLeft);
 		       }
@@ -252,6 +290,10 @@
      			lives--; 
      			if(lives == 0){
      				clearInterval(enemyInt);
+     				clearInterval(flappingInt);
+     				gameRunning = false;
+     				//figure out why gameLoop is still running
+     				cancelAnimationFrame(panAni);
      				stage.html('<h1>Game Over your score was '+score+'</h1>');
      			}
 
@@ -260,34 +302,71 @@
 
      	})
 
+     	panBackground();
 
-
-
+		if(gameRunning == true) {
+			panAni = requestAnimationFrame(gameLoop)
+		}
 
 		//window is the default object for JS
-		requestAnimationFrame(gameLoop)
 
 	}//end gameLoop
 
 	//timer:
 	//setInterval(gameLoop, 1000/30); //30fps
 	//setTimeout(gameLoop, 1000/30);
-	window.requestAnimationFrame(gameLoop)
+	
 
+//background animation
+	function panBackground(){
+		if(sDir == 'right'){
+			speedX -= 3;
+		}else{
+			speedX += 3;
+		}
+
+		stage.css({'background-position': speedX+'px '+speedY+'px'})
+
+	}
+
+
+		function dragonFlap(){
+			const frames = [0,1,2,3],
+			      frameWidth = 200;
+
+			let bgPosX = -(frameWidth * frames[curFrame]),
+			    bgPosY = 0;
+
+			    if(sDir == 'left'){
+			    	bgPosY = -144;
+			    }else{
+			    	bgPosY = 0;
+			    }
+
+			dragon.css({'background-position':bgPosX+'px '+bgPosY+'px'}); 
+			curFrame++;
+			if(curFrame == frames.length){
+				curFrame = 0;
+			}     
+
+		}	//end dragonFlap
+	
 
 	//shooting our fire
-
 	function shootFlame(){
 		let flame = $('<div>').addClass('flame');
 
 		//add coordinates relative to dragon's current position
 		let dTop = dragon.position().top,
 			dLeft = dragon.position().left,
-			fTop = dTop+23, //middle 
-			fLeft = dLeft+50; //riht hand side
+			fTop = dTop+78, //middle 
+			fLeft = dLeft+186; //right hand side
 
 		flame.css({top:fTop, left:fLeft});
 		stage.append(flame);
+		//simple version
+		//woosh.play(); Demo this and show why that is a problem
+		playSound(woosh, .2);
 
 		flame.animate({left:stage.width()+100}, 1000, function(){
 			//when animation is complete:
@@ -298,14 +377,27 @@
 
 	}//end shootFlame()
 
+
+	function playSound(track, vol){
+		let tempSound = track.cloneNode(); //duplicates any object including HTML objects
+				tempSound.volume = vol;
+				tempSound.play();
+	}
+
 	function createEnemy(){
 		let enemy = $('<div>').addClass('enemy');
 		let randClass = Math.random();
 
-		if(randClass > .5){
+		if(randClass > .9){
 			enemy.addClass('blue');
-		}else{
+		}else if(randClass > .75){
 			enemy.addClass('purple');
+		}else if(randClass > .55){
+			enemy.addClass('green')
+		}else if(randClass > .35){
+			enemy.addClass('red')
+		}else{
+			enemy.addClass('pink');
 		}
 
 		//apply position to our enemy:
@@ -321,6 +413,9 @@
 		})
 
 	}
+
+
+
 
 //hit detect
 

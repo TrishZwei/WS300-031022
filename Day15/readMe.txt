@@ -1,1 +1,0 @@
-No planned demos today unless students want something in specific.

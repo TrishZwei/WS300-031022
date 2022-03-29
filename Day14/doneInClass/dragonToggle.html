@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Pan Background</title>
+	<style type="text/css">
+		body{
+			font-family: Verdana;
+		}
+
+		#game-stage{
+			position: absolute;
+			top: 10px;
+			left: 10px;
+			bottom: 10px;
+			right: 10px;
+			background-color: #59744B;
+			background-image: url('images/fullbackground.jpg');
+			border: 1px solid black;
+			background-position: 0px 0px;
+			background-repeat: repeat-x;
+			overflow: hidden;
+		}
+
+		#my-dragon{
+			position: absolute;
+			top: 100px;
+			left: 100px;
+			width: 200px;
+			height: 144px;
+			background-position: 0px 0px;
+			background-image: url('images/dragon2.png');
+
+		}
+
+	</style>
+</head>
+<body>
+	<div id="game-stage">
+		<div id="my-dragon"></div>
+	</div>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+	<script type="text/javascript">
+		'use strict';
+
+		let speedX = 0, //tracking horizontal speed
+			speedY = 0, //for vertical
+			sDir = 'right', //from the right/left OR up/down
+			curFrame = 0; //the current frame of animation the dragon is on
+
+		function dragonFlap(){
+			const frames = [0,1,2,3],
+			      frameWidth = 200;
+
+			let bgPosX = -(frameWidth * frames[curFrame]),
+			    bgPosY = 0;
+
+			    if(sDir == 'left'){
+			    	bgPosY = -144;
+			    }else{
+			    	bgPosY = 0;
+			    }
+
+			$('#my-dragon').css({'background-position':bgPosX+'px '+bgPosY+'px'}); 
+			curFrame++;
+			if(curFrame == frames.length){
+				curFrame = 0;
+			}     
+
+		}	//end dragonFlap
+
+		setInterval(dragonFlap, 1000/10); //10 FPS
+
+
+
+		function panBackground(){
+			if(sDir == 'right'){
+				speedX -= 3; //number of pixels
+			}else{
+				speedX += 3
+			}
+
+			$('#game-stage').css({'background-position': speedX +'px '+ speedY + 'px'});
+			//window is default object so we don't have to specify it:
+			requestAnimationFrame(panBackground);
+		}	
+
+		panBackground();
+
+		$(document).keydown( function(e){
+			//e stands for event
+			console.log(e.which);
+			if(e.which == 39){
+				sDir = 'right'
+
+			}else if(e.which == 37){
+				sDir = 'left';
+			}
+
+
+
+		})
+
+
+
+	</script>
+</body>
+</html>
