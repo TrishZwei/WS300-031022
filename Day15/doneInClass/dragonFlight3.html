@@ -88,7 +88,7 @@
 		'use strict';
 		let dragon = $('.dragon'), //our dragon
 		    stage = $('.stage'), //our game stage
-		    gameRunning = false, //shows if the game is currently running
+		    gameRunning = true, //shows if the game is currently running
 		    speed = 6, //speed of movement
 		    score = 0, //values of birds killed
 		    lives = 3, //no. of lives for dragon
@@ -98,7 +98,7 @@
 		    sDir = 'right', //direction of scroll of bg
 		    curFrame = 0,
 		    flappingInt = setInterval(dragonFlap, 1000/10), //animation fps
-		    panAni;
+		    panAni = requestAnimationFrame(gameLoop)
 
 
 		let dir = {
@@ -108,12 +108,6 @@
 					right:false
 					}    
 		//dir is an object literal: propertyName:propertyValue, propertyName:propertyValue, ...
-
-	if(gameRunning == false ){
-		panAni = requestAnimationFrame(gameLoop);
- 		gameRunning = true;
-		}
-
 
 	//event listeners:
 
@@ -301,11 +295,11 @@
 
      	})
 
+
+
      	panBackground();
 
-		if(gameRunning == true) {
-			panAni = requestAnimationFrame(gameLoop)
-		}
+		requestAnimationFrame(gameLoop)
 
 		//window is the default object for JS
 
@@ -402,9 +396,6 @@
 		})
 
 	}
-
-
-
 
 //hit detect
 
