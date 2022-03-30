@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Promises</title>
+</head>
+
+<body>
+
+  <!--
+    a promise is something that will happen in the future. ex: requsting a web cam, we have to wait for the user to accept. Data retrieved from the web may succeed or fail, either way we have to wait for the data in order to process it. 
+  -->
+  <script>
+    function makePizza(toppings){
+      //a pizza takes time...
+      //your order number/receipt is a promise that they will give you a pizza in the future (when it is finished).
+
+      const pizzaPromise = new Promise( function(resolve, reject){
+        //when you are ready you can resolve the promise
+        resolve(`Here is your pizza 🍕 with the toppings ${toppings.join(' ')}`);
+        //if something goes wrong, we can reject this promise
+
+      });
+      //promises are made immediately, but do not resolve until they are ready (data comes back, timer is complete... ) 
+      return pizzaPromise;
+
+    }
+
+    const pepperoniPromise = makePizza(['pepperoni']);
+    const canadianPromise = makePizza(['pepperoni', 'mushrooms', 'onions']);
+
+    //can't just do pepperoniPromise.value to access the value of the promise. You need it to wait for the response. We can use the then method to wait and bring it back.
+    pepperoniPromise.then(function(pizza){
+      console.log(pizza);
+    })
+    canadianPromise.then(function(pizza){
+      console.log(pizza);
+    })
+
+
+  </script>
+</body>
+
+</html>

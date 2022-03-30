@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Event Loop</title>
+
+  <!-- notes:
+  JS is single threaded. That means only one thing can be run at a time.
+
+YT Event Loop talk
+https://www.youtube.com/watch?v=8aGhZQkoFbQ&t
+
+show the code below in loupe
+http://latentflip.com/loupe/
+
+loupe helps you visualize the call stack, it does not handle arrow functions or backticks. paste the code into the loupe
+
+demo taken from WesBos
+-->
+</head>
+<body>
+<div class="go">Click Me!</div>
+
+  <script>
+    //what order do you expect these to show up and when?
+    console.log('starting')
+    //the setTimeout is a callback function and through web/browser API, it gets put into the callback queue
+
+    setTimeout(function(){
+      console.log('Running');
+    }, 7000); //try this with 0
+
+    setInterval( function(){
+      console.log('Boop');
+    }, 100)
+
+    console.log('ending');
+
+  </script>
+</body>
+
+</html>

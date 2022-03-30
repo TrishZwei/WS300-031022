@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Callback Hell</title>
+  <style type="text/css">
+
+    .go{
+      margin: 5rem;
+      background: white;
+      padding: 5rem;
+      width: 3rem;
+      height: 3rem;
+      text-align: center;
+      transition: all 0.2s;
+      border: 2px solid black;
+    }
+
+    .go.circle{
+      border-radius: 50%;
+    }
+
+    .go.red{
+      background: red;
+    }
+
+    .go.purple{
+      background: purple;
+      color: white;
+    }
+
+    .go.fade-out{
+      opacity: 0;
+    }
+
+  </style>
+  <!-- notes:
+  JS is single threaded. That means only one thing can be run at a time.
+
+YT Event Loop talk
+https://www.youtube.com/watch?v=8aGhZQkoFbQ&t
+
+show the code below in loupe
+http://latentflip.com/loupe/
+
+loupe helps you visualize the call stack, it does not handle arrow functions or backticks. paste the code into the loupe
+
+demo taken from WesBos
+-->
+</head>
+<body>
+<div class="go">Click Me!</div>
+
+<script>
+// function wait(ms = 0){
+//   return new Promise( function(resolve){
+//     setTimeout(resolve, ms)
+//   });
+
+// }
+
+//function expression version:
+// const wait = function(ms = 0){
+//     return new Promise( function(resolve){
+//     setTimeout(resolve, ms)
+//   });
+
+//arrow function on one line:
+const wait = (ms = 0) => new Promise((resolve) =>setTimeout(resolve, ms));
+//arrow function has implicit return, so no need to use keyword return
+
+
+
+
+
+//check in on wait:
+wait(200).then(function(){
+  console.log('waited.... done.')
+})
+
+
+const go = document.querySelector('.go');
+
+//example of promised land:
+
+async function animate(e){
+  const el = e.currentTarget;
+  //1. change the text to GO when clicked
+  el.textContent = 'GO!';
+  await wait(2000)
+  //2 make it a circle after 2s
+  el.classList.add('circle');
+  await wait(500)
+  //3. make it red after .5s
+      el.classList.add('red');
+  await wait(250)
+  //4. make it square    
+    el.classList.remove('circle');
+  await  wait(500)
+    el.classList.remove('red');
+    el.classList.add('purple');
+  await  wait(500)
+    el.classList.add('fade-out')
+  }
+
+go.addEventListener('click', animate)
+
+
+
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Async/Await</title>
+</head>
+
+<body>
+  <script>
+    function wait(ms=0){
+      return new Promise( (resolve) => {
+        setTimeout(resolve, ms)
+      })
+    }
+
+function makePizza(toppings = []) {
+      return new Promise(function (resolve, reject) {
+        // reject if people try with pineapple
+        if (toppings.includes('pineapple')) {
+          reject('Seriously? Get out 🍍');
+        }
+        const amountOfTimeToBake = 500 + (toppings.length * 200);
+        // wait 1 second for the pizza to cook:
+        setTimeout(function () {
+          // when you are ready, you can resolve this promise
+          resolve(`Here is your pizza 🍕 with the toppings ${toppings.join(' ')}`);
+        }, amountOfTimeToBake);
+        // if something went wrong, we can reject this promise;
+      });
+    }
+
+    async function makeDinner(){
+      //make this more performative by making a master promise which has the await
+      const pizza1 = makePizza(['pepperoni']);
+      const pizza2 = makePizza(['pepperoni', 'sausage', 'mushrooms']);
+//      const pizzas = Promise.all([pizza1, pizza2]);
+//      console.log(pizzas)//gives us the big promise... but we don't want that.
+//destructure these pizzas:
+      const [first, second] = await Promise.all([pizza1, pizza2]);
+      console.log(pizzas)//gives us the big promise... but we don't want that.
+      console.log(first, second)
+
+
+    }
+
+    makeDinner();
+
+
+  </script>
+</body>
+
+</html>

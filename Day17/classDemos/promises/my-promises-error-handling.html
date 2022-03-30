@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Promises</title>
+</head>
+
+<body>
+
+  <!--
+    a promise is something that will happen in the future. ex: requsting a web cam, we have to wait for the user to accept. Data retrieved from the web may succeed or fail, either way we have to wait for the data in order to process it. 
+  -->
+  <script>
+    function makePizza(toppings = []){
+  
+      //includes returns true/false. indexOf returns the index where the argument is found (ex. 4), -1 if it is not found.
+
+       
+
+      return new Promise( function(resolve, reject){
+        //wait for the pizza to cook: (what if it takes a bit to get the data back...)
+      if (toppings.includes('pineapple')) {
+          reject('Seriously? Get out 🍍');
+        }
+
+      if(toppings.includes('anchovies')){
+        reject('Ewwww... smelly 🐟');
+      }
+      const amountOfTimeToBake = 500 + (toppings.length * 200);
+        setTimeout(function(){
+        //when you are ready you can resolve the promise
+        resolve(`Here is your pizza 🍕 with the toppings ${toppings.join(' ')}`);
+        //if something goes wrong, we can reject this promise
+
+        }, amountOfTimeToBake);
+
+      });
+      //promises are made immediately, but do not resolve until they are ready (data comes back, timer is complete... ) 
+      return pizzaPromise;
+
+    }
+
+
+// //run them concurrently
+// const pizzaPromise1 = makePizza(['bell peppers', 'gyro meat', 'feta'])
+// const pizzaPromise2  = makePizza(['alfredo sauce', 'chicken', 'jack cheese', 'spinach'])
+// const pizzaPromise3 = makePizza(['pepperoni', 'sausage']);
+
+// //how do I know when they are all done?    
+
+// const dinnerPromise = Promise.all([pizzaPromise1, pizzaPromise2,pizzaPromise3]); //static method on the promise object, takes all your promises and 
+// dinnerPromise.then(function([greek, white, classic]) {
+//   //the promises match up to the variables in the function
+//   console.log(greek, white, classic, ' Your order is complete.')
+
+// })
+
+// const firstPizzaPromise = Promise.race([pizzaPromise1, pizzaPromise2,pizzaPromise3]);
+// //gets the first one done:
+//       firstPizzaPromise.then( pizza => {
+//         console.log('The first pizza ready is:')
+//         console.log(pizza)
+//       })
+
+
+//run this without catch first... 
+makePizza(['ham', 'pineapple']).then(pizza => {
+  console.log(pizza)
+}).catch(err => {
+  console.log('Oh no!!! ' + err);
+})
+//then happens when it is successful
+//catch when something goes wrong.
+
+makePizza(['pepperoni', 'anchovies']).then(pizza => {
+  console.log(pizza)
+}).catch(err => {
+  console.log('Oh no!!! ' + err);
+})
+
+//make error handling one function. 
+makePizza(['pineapple']).then(pizza => {
+  console.log(pizza)
+}).catch(handleError)
+
+makePizza(['anchovies']).then(pizza => {
+  console.log(pizza)
+}).catch(handleError)
+
+//if there are a bunch of chained promises, the catch can just go at the end. 
+//however, that then bails out where the chain failed and the other promises are not called. And this makes sense since your promise chain should be written based on dependancy... like if step 4 is dependend on step 3, if step 3 fails, then step 4 should not be called.
+
+//if not all promises called are dependant, then you can make a mega promise (see dinnerPromise) and use .allSettled([p1,p2,p3]) (the promises you are calling....) and use then on that. all() assumes all are going to go through, if any are expected to be rejected you should use allSettled() OR a catch chained after the all()
+
+
+function handleError(err) {
+  console.log('Ohh noooo!!');
+  console.log(err);
+    }
+
+
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Promises</title>
+</head>
+
+<body>
+  <!--
+    a promise is something that will happen in the future. ex: requsting a web cam, we have to wait for the user to accept. Data retrieved from the web may succeed or fail, either way we have to wait for the data in order to process it. 
+  -->
+  <script>
+    function makePizza(){
+      //a pizza takes time...
+      //your order number/receipt is a promise that they will give you a pizza in the future (when it is finished).
+      const pizzaPromise = new Promise( function(resolve, reject){
+        //when you are ready you can resolve the promise
+        resolve('🍕');
+        //if something goes wrong, we can reject this promise
+
+      });
+      //promises are made immediately, but do not resolve until they are ready (data comes back, timer is complete... ) 
+      return pizzaPromise;
+
+    }
+
+    const pizza = makePizza()
+
+    console.log(pizza);
+
+  </script>
+</body>
+
+</html>

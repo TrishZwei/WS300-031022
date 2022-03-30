@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Callback Hell</title>
+  <style type="text/css">
+
+    .go{
+      margin: 5rem;
+      background: white;
+      padding: 5rem;
+      width: 25rem;
+      height: 25rem;
+      text-align: center;
+      transition: all 0.2s;
+    }
+
+    .go.circle{
+      border-radius: 50%;
+    }
+
+    .go.red{
+      background: red;
+    }
+
+    .go.purple{
+      background: purple;
+      color: white;
+    }
+
+    .go.fade-out{
+      opacity: 0;
+    }
+
+  </style>
+  <!-- notes:
+  JS is single threaded. That means only one thing can be run at a time.
+
+YT Event Loop talk
+https://www.youtube.com/watch?v=8aGhZQkoFbQ&t
+
+show the code below in loupe
+http://latentflip.com/loupe/
+
+loupe helps you visualize the call stack, it does not handle arrow functions or backticks. paste the code into the loupe
+
+demo taken from WesBos
+-->
+</head>
+<body>
+<div class="go">Click Me!</div>
+
+<script>
+const go = document.querySelector('.go');
+
+//example of callback hell:
+
+//1. change the text to GO when clicked
+go.addEventListener('click', function(e){
+  const el = e.currentTarget;
+  el.textContent = 'GO!';
+
+  //2. make it a circle after 2 seconds
+  setTimeout(function(){
+    el.classList.add('circle');
+    //3. make it red after .5s
+    setTimeout(function(){
+      el.classList.add('red')
+      //4. make it a square after .25s
+      setTimeout(function(){
+        el.classList.remove('circle');
+        //5. make it purple after .3s
+          setTimeout(function(){
+            el.classList.remove('red');
+            el.classList.add('purple');
+            // let str = el.classList+'';
+            // console.log(el.classList);
+            // str = str.replace('red', 'purple')
+            // console.log(str)
+            // el.classList = str;
+              setTimeout(function(){
+                //6. make it fadeout after .5s
+                el.classList.add('fade-out')
+              }, 500)
+          },300)
+      },250)
+
+    },500)
+
+  }, 2000)
+
+})
+
+
+
+
+//7. finish!
+
+
+
+
+
+  </script>
+</body>
+
+</html>

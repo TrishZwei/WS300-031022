@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Event Loop</title>
+  <link rel="stylesheet" href="../base.css">
+  <!-- notes:
+  JS is single threaded. That means only one thing can be run at a time.
+
+YT Event Loop talk
+https://www.youtube.com/watch?v=8aGhZQkoFbQ&t
+
+-->
+</head>
+
+<body>
+  <script>
+   
+   function multiply(a,b){
+    return a*b;
+   }
+
+   function square(n){
+    return multiply(n,n);
+   }
+
+   function printSquare(n){
+    let squared = square(n);
+    console.log(squared);
+
+   }
+
+   printSquare(4);
+/* 
+  CallStack:
+  3. multiply(a,b)
+  2. square(n)
+  1. printSquare
+
+  printSquare is called first, then square then multiply. These then are executed in the opposite order. Multiply must be run in order for square to work, and square then must be run in order for printSquare to work. 
+
+  return ends the function for square and multiply and printSquare simply ends when it gets to the end of its code.
+*/
+
+function foo(){
+  throw new Error('Oops!');
+}
+
+function bar(){
+  foo();
+}
+
+function baz(){
+  bar();
+}
+
+baz();
+
+/* 
+baz calls bar to run, which then calls foo to run which then throws the error. We then see the callstack in the console.
+*/
+
+/*
+the following is a recursion error: uncomment it to see it in action
+*/
+
+/*
+function fooTwo(){
+  fooTwo();
+}
+*/
+
+/*
+blocking / blocking behavior
+really means: slow and on the code stack
+faux code from the talk below:
+*/
+
+/* 
+//these are synchronus requests.
+var fooThree = $.getSync('//foo.com'), //network request 1
+var fooBar = $.getSync('//bar.com'), //network request 2
+var qux = $.getSync('//qux.com'), //network request 3
+
+//these need to wait for each other before the next one can be run. So, fooThree needs to be complete before fooBar can get started. This is blocking behavior. Google no likey for SEO ranking.
+
+//of course we should do these asynchronous so that we don't block our code. The talk shows an excellent example of this around minute 9.
+*/
+
+console.log('hi')
+setTimeout(function(){
+  console.log('there')
+}, 5000)
+
+console.log('JSConfEU');
+
+/*
+  stack:
+1.  console.log('hi')
+done. Off stack.
+1. setTimeout(cb,5000)
+disappears to wait 5 seconds 
+
+1. console.log('JSConfEU')
+done. Off stack.
+
+1. console.log('there') //from the setTimeout shows up 5 seconds later 
+
+How? What? JS only does one thing at a time... 
+
+well...
+
+browsers and concurrency. The browser is more than just JS' runtime.
+
+setTimeout is part of the browser's web api. And these are like additional threads you can use to make JS asynchronous.
+
+If the stack is empty the event loop looks as the task queue and puts those tasks onto the stack.
+
+*/
+
+/*
+setTimeout(cb,0) //pushes onto the queue and has to wait for the stack to be clear.
+
+ajax requests live in the web api, so they get sent to the task queue when the request is complete.
+
+stopped taking notes at at 17:30
+
+http://latentflip.com/loupe/
+
+loupe helps you visualize the call stack, it does not handle arrow functions or backticks. This was initially written in 2014 and probably not updated for ES6.
+
+*/
+
+  </script>
+</body>
+
+</html>

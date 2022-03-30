@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Promises</title>
+</head>
+
+<body>
+
+  <!--
+    a promise is something that will happen in the future. ex: requsting a web cam, we have to wait for the user to accept. Data retrieved from the web may succeed or fail, either way we have to wait for the data in order to process it. 
+  -->
+  <script>
+    function makePizza(toppings = []){
+      //a pizza takes time... and this oven can only bake one pizza at a time.
+      //your order number/receipt is a promise that they will give you a pizza in the future (when it is finished).
+      //instead of storing it as a variable, we can just return it.
+      //changed to empty array because some people like pizza with no toppings. Crazy I know. We are going to change the return timing to add some time as per additional toppings.... so some pizzas will take longer to resolve than others.
+      const amountOfTimeToBake = 500 + (toppings.length * 200); 
+
+      return new Promise( function(resolve, reject){
+        //wait for the pizza to cook: (what if it takes a bit to get the data back...)
+
+        setTimeout(function(){
+        //when you are ready you can resolve the promise
+        resolve(`Here is your pizza 🍕 with the toppings ${toppings.join(' ')}`);
+        //if something goes wrong, we can reject this promise
+
+        }, amountOfTimeToBake);
+
+      });
+      //promises are made immediately, but do not resolve until they are ready (data comes back, timer is complete... ) 
+      return pizzaPromise;
+
+    }
+
+    //since makePizza returns a promise we can chain a then method directly on it.
+    //we can chain then methods on that too. This is sequentially ordered.
+    makePizza(['pepperoni'])
+      .then(function(pizza){
+      console.log(pizza);
+      return makePizza(['ham', 'cheese'])
+    }).then(function(pizza){
+        console.log(pizza);
+        return makePizza(['sausage','bacon', 'pepperoni', 'ham'])
+      }).then(function(pizza){
+        console.log(pizza)
+        return makePizza(); //no ingredients
+      }).then(function(pizza){
+        console.log(pizza)
+        return makePizza(['sausage','bacon', 'pepperoni', 'ham', 'chicken', 'shredded beef', 'ground pork', 'olives', 'onions', 'mushrooms' ]); //lots of ingredients
+      }).then( pizza => {
+        console.log('All done! Here is your last pizza')
+        console.log(pizza);
+
+      })
+
+
+    
+
+
+  </script>
+</body>
+
+</html>
