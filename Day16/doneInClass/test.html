@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Rando Stats</title>
+	<style type="text/css">
+		body{
+			font-family: Verdana;
+		}
+
+	</style>
+</head>
+<body>
+	<div class="str stat"></div>
+	<div class="dex stat"></div>
+	<div class="con stat"></div>
+	<div class="int stat"></div>
+	<div class="wis stat"></div>
+	<div class="cha stat"></div>
+
+
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+	<script type="text/javascript">
+	//generate 4d6 roll remove lowest
+	//insert into stat divs
+
+	let statArray = [];
+
+	//function to generate a whole random interger
+	//@2param: numbers
+	function getRandInt(min = 1, max = 100){
+		return Math.floor(Math.random() *(max-min +1))+min;
+	}
+
+	function rollStat() {
+		$('.stat').each( function(){
+		let singleStat = 0;
+		statArray = [];
+
+		for(let i = 0; i<4; i++){
+			let num = getRandInt(1,6);
+			statArray.push(num)
+		}
+		statArray.sort();
+		statArray.shift();
+
+		singleStat = statArray.reduce(totalStats)
+		
+		console.log(singleStat);
+		$(this).text(singleStat);
+
+		})
+		// body...
+	}
+
+	rollStat();
+
+function totalStats(total, num) {
+  return total + num;
+}
+
+	</script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>jQuery Template</title>
+	<style type="text/css">
+		body{
+			font-family: Verdana;
+			font-size: 1.25em;
+			margin: 0 auto;
+			padding: 1em;
+		}
+
+		#js-content{
+			padding: 5px;
+			border: 2px dashed lightgray;
+		}
+	</style>
+</head>
+<body>
+	<p>If successful the returned data will appear below.</p>
+	<div id="js-content">You need javascript to see this content</div>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+	<script type="text/javascript">
+		function getData(){
+			const flickrAPI = 'https://www.flickr.com/services/feeds/photos_public.gne?jsoncallback=?';
+			$.getJSON( flickrAPI, {
+				tags: 'cat',
+				tagmode: 'any',
+				format:'json'
+				}, successFn)
+
+		}
+
+		function successFn(d) {
+			console.log(d);
+			$('#js-content').text('');
+			
+			$.each(d.items, function(i, item) {
+				$('<img>').attr('src', item.media.m).appendTo('#js-content');
+
+				if(i===4){
+					return false;
+					//stop running now.
+				}
+
+			})
+
+		}
+
+	getData();
+
+	</script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>jQuery Template</title>
+	<style type="text/css">
+		body{
+			font-family: Verdana;
+			font-size: 1.25em;
+			margin: 0 auto;
+			padding: 1em;
+		}
+
+		#js-content{
+			padding: 5px;
+			border: 2px dashed lightgray;
+		}
+	</style>
+</head>
+<body>
+	<p>If successful the returned data will appear below.</p>
+	<div id="js-content"></div>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+	<script type="text/javascript">
+		//$ = jQuery 
+
+		//do ajax
+
+		function getData(){
+			$.get('data/testdata.txt', successFn).fail(errorFn);
+		}
+
+		function successFn(data){
+			console.log(data); //this is good if we don't know what the data looks like.
+			$('#js-content').text(data);
+		}
+
+		function errorFn(xhr, status, strErr){
+			$('#js-content').text('there was an '+status+':'+strErr);
+			
+		}
+
+	getData();
+
+	</script>
+</body>
+</html>

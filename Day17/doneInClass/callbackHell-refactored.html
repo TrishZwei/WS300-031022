@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>callback hell</title>
+	<style type="text/css">
+		body{
+			font-family: Verdana;
+		}
+
+		.go{
+			margin: 5rem;
+			background: white;
+			padding: 5rem;
+			width: 25rem;
+			height: 25rem;
+			text-align: center;
+			transition: all 0.2s;
+		}
+
+
+		.go.circle{
+			border-radius: 50%;
+		}
+
+		.go.red{
+			background: red;
+		}
+
+		.go.purple{
+			background: purple;
+			color: white;
+		}
+
+		.go.fade-out{
+			opacity: 0;
+		}
+
+	</style>
+</head>
+<body>
+	<div class="go">Click Me!</div>
+<!--
+ a promise is something that will happen in the future. ex: requesting a web cam, we have to wait for the user to accept. Data retrieved from the web that may succeed or fail. etc.
+-->	
+
+	<script type="text/javascript">
+		const go = document.querySelector('.go');
+		
+		//function expression:
+		const wait = function(ms = 0){
+			return new Promise( function(resolve){
+				setTimeout(resolve, ms)
+			})
+		}
+
+		//check in on wait...
+		wait(200).then(function(){
+			console.log('waited... done');
+		})
+
+		function animate(e){
+		const el = e.currentTarget;	
+		//1. change text to go when clicked:
+		el.textContent = 'GO!';
+		//2. make it a circle after 2 seconds:
+		wait(2000).then( () => { //arrow function syntax:
+			el.classList.add('circle');
+			return wait(500)
+		})
+		.then( () => {
+			el.classList.add('red')
+			return wait(250)
+		})
+		.then( () => {
+			el.classList.remove('circle')
+			return wait(500)
+		})
+		.then( () => {
+			el.classList.remove('red')
+			el.classList.add('purple')
+			return wait(500)
+		})
+		.then( ()=> {
+			el.classList.add('fade-out')
+
+		})	
+
+
+		}//end animate
+
+	go.addEventListener('click', animate)
+
+
+	</script>
+</body>
+</html>

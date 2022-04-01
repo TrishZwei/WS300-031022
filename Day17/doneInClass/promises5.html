@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Promises 2</title>
+	<style type="text/css">
+		body{
+			font-family: Verdana;
+		}
+
+	</style>
+</head>
+<body>
+<!--
+ a promise is something that will happen in the future. ex: requesting a web cam, we have to wait for the user to accept. Data retrieved from the web that may succeed or fail. etc.
+-->	
+
+	<script type="text/javascript">
+
+		//@Param: toppings array['item1', 'item2', 'item3']
+		function makePizza(toppings){
+			//a pizza takes time
+			//your order number/reciept is a promise that they will give you a pizza in the future when it is finished
+			const pizzaPromise = new Promise( function(resolve, reject){
+				//wait for the pizza to cook (by artificially usins a setTimeout)
+				setTimeout(function(){
+				//when you are ready you can resolve the promise
+				resolve(`Here is your pizza 🍕 with the toppings ${toppings.join(', ')}`);
+				//U+1F355
+				//if something goes wrong we can reject the promise
+				}, 1000)
+
+				
+			})
+			//promises are made immediately but to do not resolve until they are ready (data comes back, timer is complete etc...)
+			//return is important for promises
+			return pizzaPromise;
+
+		}
+		//since make pizza returns a promise we can chain a then method directly on it
+		makePizza(['pepperoni']).then( function(pizza){
+			console.log(pizza);
+			return makePizza(['ham', 'pinapple'])
+		}).then( function(pizza){
+			console.log(pizza);
+			return makePizza(['pepperoni', 'pinapple', 'jalapeno'])
+
+		}).then( function (pizza) {
+			console.log(pizza)
+		})
+
+	</script>
+</body>
+</html>
