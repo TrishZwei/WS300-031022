@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Immediately Invoking Function Expression</title>
+	<style type="text/css">
+		body{
+			font-family: Verdana;
+		}
+
+	</style>
+</head>
+<body>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+	<script type="text/javascript">
+		//why iifes are good.
+
+		let counter = 0;
+
+		(function(){
+
+		function add(a = 0 , b = 0){
+			return a+b;
+
+		}
+
+		console.log(add(10,20)); //return 30
+
+		})(); //iife
+
+/*
+iife construction:
+(function(){
+	//code goes in here.
+})()
+
+
+*/
+
+
+		console.log(add(10,15)); 
+		//Uncaught ReferenceError: add is not defined at iife.html:33:11
+
+
+	</script>
+</body>
+</html>
